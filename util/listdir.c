@@ -21,14 +21,15 @@ void listdir(char *name, int level)
         return;
     if (!(entry = readdir(dir)))
         return;
-
     while ((entry = readdir(dir)) != NULL)
     {
         if (entry->d_type == DT_DIR) 
         {
             char path[1024];
-            int len = snprintf(path, sizeof(path)-1, "%s/%s", name, entry->d_name);
-            path[len] = 0;
+            ft_memset(path, 0, 1024);
+            ft_strcpy(path, name);
+            ft_strcat(path, "/");
+            ft_strcat(path, entry->d_name);
             if (entry->d_name[0] == '.')
                 continue ;
             ft_printf("%*s./%s\n", level*2, "", entry->d_name);
