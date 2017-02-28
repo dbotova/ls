@@ -12,31 +12,14 @@
 
 #include "../ft_ls.h"
 
-static DIR	*check_location(char *arg1, char *arg2)
+static char	*check_location(char *arg1, char *arg2)
 {
-	DIR *dir;
-	int flag;
-
-	flag = 0;
 	if (!arg1 && !arg2)
-		dir = opendir(".");
+		return (".");
 	else if (!arg2 && arg1[0] != '-')
-	{
-		dir = opendir(arg1);
-		flag = 1;
-	}
+		return (arg1);
 	else
-	{
-		dir = opendir(arg2);
-		flag = 2;
-	}
-	if (!dir)
-	{
-		ft_printf("ft_ls: %s ", (flag == 1 ? arg1 : arg2));
-		perror("");
-		exit(1);
-	}
-	return (dir);
+		return (arg2);
 }
 
 static char	*check_options(char *arg1, char *arg2)
@@ -61,20 +44,12 @@ static char	*check_options(char *arg1, char *arg2)
 		return (NULL);
 }
 
-t_args	*take_args(char *arg1, char *arg2)
+void	take_args(char *arg1, char *arg2, char **location, char **options)
 {
-	t_args *new;
 	char *tmp;
-
-	new = malloc(sizeof(t_args));
-	if (new)
-	{
-		new->options = (char *)malloc(sizeof(char) * OPTIONS_SIZE + 1);
-		ft_memset(new->options, 0, OPTIONS_SIZE + 1);
-		new->dir = check_location(arg1, arg2);
-		tmp = check_options(arg1, arg2);
-		if (tmp)
-			ft_strcpy(new->options, tmp);
-	}
-	return (new);
+	
+	*location = ft_strdup(check_location(arg1, arg2));
+	tmp = check_options(arg1, arg2);
+	if (tmp)
+		*options = ft_strdup(tmp);
 }

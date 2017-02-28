@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.c                                            :+:      :+:    :+:   */
+/*   listfiles.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 15:34:02 by dbotova           #+#    #+#             */
-/*   Updated: 2017/02/27 15:34:04 by dbotova          ###   ########.fr       */
+/*   Created: 2017/02/27 19:05:38 by dbotova           #+#    #+#             */
+/*   Updated: 2017/02/27 19:05:39 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../ft_ls.h"
 
-void	ft_ls(char *location, char *oprtions)
+void	listfiles(char *location, char *oprtions)
 {
 	DIR *dir;
 	struct dirent *d;
@@ -24,10 +24,14 @@ void	ft_ls(char *location, char *oprtions)
 		perror("");
 		exit(1);
 	}
-	if (ft_strchr(oprtions, 'R'))
-		listdir(location, 0);
 	else
-		listfiles(location, oprtions);
+	{
+		while ((d = readdir(dir)) != NULL)
+		{
+			if (d->d_name[0] != '.')
+				ft_printf("%s\n", d->d_name);
+		}
+	}
 	closedir(dir);
 	exit(0);
 }

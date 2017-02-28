@@ -14,19 +14,21 @@
 
 int main (int argc, char **argv)
 {
-	t_args *args;
-	
-	// args = take_args(arg1, arg2);
+	char *location;
+	char *options;
 
 	if (argc == 1)
-		args = take_args(NULL, NULL);
+		take_args(NULL, NULL, &location, &options);
 	else if (argc == 2)
-		args = take_args(argv[1], NULL);
+		take_args(argv[1], NULL, &location, &options);
 	else if (argc == 3)
-		args = take_args(argv[1], argv[2]);
+		take_args(argv[1], argv[2], &location, &options);
 	else
 		exit(1);
-
-	ft_ls(args);
+	
+	ft_ls(location, options);
+	SMART_FREE(location);
+	if (options)
+		SMART_FREE(options);
 	return (0);
 }

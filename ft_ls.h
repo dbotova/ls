@@ -24,9 +24,12 @@ typedef struct	s_args
 {
 	DIR			*dir;
 	char		*options;
+	char		*name;
 }				t_args;
 
-void	ft_ls(t_args *args);
-t_args	*take_args(char *arg1, char *arg2);
+void	ft_ls(char *location, char *oprtions);
+void 	listdir(char *name, int level);
+void	listfiles(char *location, char *oprtions);
+void	take_args(char *arg1, char *arg2, char **location, char **options);
 
 #endif
