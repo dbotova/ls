@@ -1,36 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/27 15:34:02 by dbotova           #+#    #+#             */
+/*   Updated: 2017/02/27 15:34:04 by dbotova          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
-void	ft_ls(char *args, ...)
+void	ft_ls(t_args *args)
 {
-	char *ptr;
-	char *spec;
-	va_list ap;
-	t_flags *flags;
-
-	va_start(ap, args);
-	ptr = args;
-	spec = NULL;
-	size = 0;
-	undef = NULL;
-	while (*ptr)
+	struct dirent *d;
+	
+	if (!*args->options)
 	{
-		if (*ptr == '-')
+		while ((d = readdir(args->dir)) != NULL)
 		{
-			ptr += ft_spec(ptr + 1, &spec);
-			if (spec || undef)
-			{
-				//ft_sread(spec, ap, &flags, undef);
-				if (spec)
-					SMART_FREE(spec);
-				if (flags)
-					SMART_FREE(flags);
-			}
+			if (d->d_name[0] != '.')
+				ft_printf("%s\n", d->d_name);
 		}
-		else
-		{
-			ft_putchar(*ptr);
-		}
-		ptr++;
 	}
-	va_end(ap);
+
+	closedir(args->dir);
+	exit(0);
 }
