@@ -14,20 +14,15 @@
 
 void	ft_ls(char *location, char *oprtions)
 {
-	DIR *dir;
-	struct dirent *d;
+	int size;
+	struct dirent arr[ARR_SIZE];
 
-	dir = opendir(location);
-	if (!dir)
-	{
-		ft_printf("ft_ls: %s ", location);
-		perror("");
-		exit(1);
-	}
 	if (ft_strchr(oprtions, 'R'))
-		listdir(location, 0);
+		size = listdir(location, arr, 0);
 	else
-		listfiles(location, oprtions);
-	closedir(dir);
+		size =  dirent_to_array(location, arr);
+	if (ft_strchr(oprtions, 't'))
+		sort_dirent_array(arr, size);
+	listfiles(location, oprtions, arr, size);
 	exit(0);
 }

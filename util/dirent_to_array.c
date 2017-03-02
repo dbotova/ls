@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   dirent_to_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 15:33:53 by dbotova           #+#    #+#             */
-/*   Updated: 2017/02/27 15:33:55 by dbotova          ###   ########.fr       */
+/*   Created: 2017/03/01 19:59:24 by dbotova           #+#    #+#             */
+/*   Updated: 2017/03/01 19:59:25 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "../ft_ls.h"
 
-int main (int argc, char **argv)
+int	dirent_to_array(char *location, struct dirent arr[])
 {
-	char *location;
-	char *options;
+	DIR *dir;
+	struct dirent *d;
+	int i;
 
-	if (argc == 1)
-		take_args(NULL, NULL, &location, &options);
-	else if (argc == 2)
-		take_args(argv[1], NULL, &location, &options);
-	else if (argc == 3)
-		take_args(argv[1], argv[2], &location, &options);
-	else
+	i = 0;
+	dir = opendir(location);
+	if (!dir)
+	{
+		ft_printf("ft_ls: %s ", location);
+		perror("");
 		exit(1);
-
-	ft_ls(location, options);
-	SMART_FREE(location);
-	if (options)
-		SMART_FREE(options);
-	return (0);
+	}
+	while ((d = readdir(dir)) != NULL)
+		arr[i++] = *d;
+	closedir(dir);
+	return (i);
 }

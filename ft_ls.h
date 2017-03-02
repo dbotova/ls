@@ -18,7 +18,7 @@
 # include <sys/stat.h>
 # include <grp.h>
 # define OPTINOS "alrRt"
-# define OPTIONS_SIZE 10
+# define ARR_SIZE 1000
 
 typedef struct	s_args
 {
@@ -28,8 +28,10 @@ typedef struct	s_args
 }				t_args;
 
 void	ft_ls(char *location, char *oprtions);
-void 	listdir(char *name, int level);
-void	listfiles(char *location, char *oprtions);
+void	sort_dirent_array(struct dirent arr[], int size);
+int 	listdir(char *name, struct dirent arr[], int i);
+void	listfiles(char *location, char *oprtions, struct dirent arr[], int count);
 void	take_args(char *arg1, char *arg2, char **location, char **options);
+int		dirent_to_array(char *location, struct dirent arr[]);
 
 #endif

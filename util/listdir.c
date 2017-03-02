@@ -15,42 +15,95 @@
 static int	is_dir(char *path)
 {
 	struct stat statbuf;
-	stat(path, &statbuf);
+	if (stat(path, &statbuf) == -1)
+    {
+        perror(path);
+        exit(1);
+    }
 	if (S_ISDIR(statbuf.st_mode))
 		return (1);
 	else
 		return (0);
 }
 
-void listdir(char *name, int level)
+static void get_path(char *path, char *name, char *d_name)
+{
+    ft_memset(path, 0, 1024);
+    ft_strcpy(path, name);
+    ft_strcat(path, "/");
+    ft_strcat(path, d_name);
+}
+
+int listdir(char *name, struct dirent arr[], int i)
 {
     DIR *dir;
     struct dirent *entry;
     char path[1024];
 
-    ft_memset(path, 0, 1024);
     if (!(dir = opendir(name)))
-        return;
+    {
+        ft_printf("ft_ls: %s ", name);
+        perror("");
+        exit(1);
+    }
     if (!(entry = readdir(dir)))
-        return;
+    {
+        ft_printf("ft_ls: %s ", name);
+        perror("");
+        exit(1);
+    }
     while ((entry = readdir(dir)) != NULL)
     {
-        ft_strcpy(path, name);
-        ft_strcat(path, "/");
-        ft_strcat(path, entry->d_name);
+        get_path(path, name, entry->d_name);
+        arr[i] = *entry;
+
+        printf("name: %s\n", arr[i].d_name);
+
         if (is_dir(path))
         {
-            if (entry->d_name[0] == '.')
-                continue ;
-            ft_printf("%*s./%s\n", level*2, "", entry->d_name);
-            listdir(path, level + 1);
+            listdir(path, arr, i);
+            closedir(dir);
         }
-        else
-        {
-            if (entry->d_name[0] == '.')
-                continue ;
-            ft_printf("%*s%s\n", level*2, "", entry->d_name);
-        }
+        i++;
     }
     closedir(dir);
+    return (i);
 }
+
+// void listdir(char *name, int level)
+// {
+//     DIR *dir;
+//     struct dirent *entry;
+//     char path[1024];
+
+//     if (!(dir = opendir(name)))
+//     {
+//         ft_printf("ft_ls: %s ", name);
+//         perror("");
+//         exit(1);
+//     }
+//     if (!(entry = readdir(dir)))
+//     {
+//         ft_printf("ft_ls: %s ", name);
+//         perror("");
+//         exit(1);
+//     }
+//     while ((entry = readdir(dir)) != NULL)
+//     {
+//         get_path(path, name, entry->d_name);
+//         if (is_dir(path))
+//         {
+//             if (entry->d_name[0] == '.')
+//                 continue ;
+//             ft_printf("%s./%s\n", "", entry->d_name);
+//             listdir(path, level + 1);
+//         }
+//         else
+//         {
+//             if (entry->d_name[0] == '.')
+//                 continue ;
+//             ft_printf("%s%s\n", "", entry->d_name);
+//         }
+//     }
+//     closedir(dir);
+// }
