@@ -18,6 +18,8 @@ static char	*check_location(char *arg1, char *arg2)
 		return (".");
 	else if (!arg2 && arg1[0] != '-')
 		return (arg1);
+	else if (arg1[0] == '-' && !arg2)
+		return (".");
 	else
 		return (arg2);
 }

@@ -12,31 +12,45 @@
 
 #include "../ft_ls.h"
 
+static int	is_dir(char *path)
+{
+	struct stat statbuf;
+	stat(path, &statbuf);
+	if (S_ISDIR(statbuf.st_mode))
+		return (1);
+	else
+		return (0);
+}
+
 void listdir(char *name, int level)
 {
     DIR *dir;
     struct dirent *entry;
+    char path[1024];
 
+    ft_memset(path, 0, 1024);
     if (!(dir = opendir(name)))
         return;
     if (!(entry = readdir(dir)))
         return;
     while ((entry = readdir(dir)) != NULL)
     {
-        if (entry->d_type == DT_DIR) 
+        ft_strcpy(path, name);
+        ft_strcat(path, "/");
+        ft_strcat(path, entry->d_name);
+        if (is_dir(path))
         {
-            char path[1024];
-            ft_memset(path, 0, 1024);
-            ft_strcpy(path, name);
-            ft_strcat(path, "/");
-            ft_strcat(path, entry->d_name);
             if (entry->d_name[0] == '.')
                 continue ;
             ft_printf("%*s./%s\n", level*2, "", entry->d_name);
             listdir(path, level + 1);
         }
         else
-        	 ft_printf("%*s%s\n", level*2, "", entry->d_name);
+        {
+            if (entry->d_name[0] == '.')
+                continue ;
+            ft_printf("%*s%s\n", level*2, "", entry->d_name);
+        }
     }
     closedir(dir);
 }

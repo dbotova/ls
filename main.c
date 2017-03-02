@@ -26,6 +26,8 @@ int main (int argc, char **argv)
 	else
 		exit(1);
 	
+	// printf("location: %s options: %s\n", location, options);
+
 	ft_ls(location, options);
 	SMART_FREE(location);
 	if (options)
