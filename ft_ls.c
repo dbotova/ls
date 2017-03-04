@@ -15,8 +15,9 @@
 static void get_path(char *path, char *name, char *d_name)
 {
     ft_memset(path, 0, 1024);
-    ft_strcpy(path, name);
-    ft_strcat(path, "/");
+	ft_strcpy(path, name);
+	if (name[ft_strlen(name) -1] != '/')
+		ft_strcat(path, "/");
     ft_strcat(path, d_name);
 }
 
@@ -34,7 +35,7 @@ static int	is_dir(char *path)
 		return (0);
 }
 
-void	ft_ls(char *location, char *options)
+int	ft_ls(char *location, char *options)
 {
 	int size;
 	t_content *cont;
@@ -51,10 +52,13 @@ void	ft_ls(char *location, char *options)
 		while (i < cont->size)
 		{
 			get_path(cont->path, location, cont->arr[i].d_name);
-			if (is_dir(cont->arr[i].d_name))
+
+			//printf("\npath: %s location: %s\n", cont->path, location);
+
+			if (is_dir(cont->path))
 			{
-				ft_printf("\n%s:\n", cont->path);
-				if (*location == '.' && ft_strlen(location) == 1)
+				ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
+				if (ft_strcmp(location, ".") == 0)
 					ft_ls(cont->arr[i].d_name, options);
 				else
 					ft_ls(cont->path, options);
@@ -63,5 +67,5 @@ void	ft_ls(char *location, char *options)
 		}
 	}
 	SMART_FREE(cont);
-	exit(0);
+	return(0);
 }

@@ -41,10 +41,10 @@ static void	get_row_num(t_content *cont)
 	int etalon;
 
 	find_max(cont);
-	etalon = 32;
+	etalon = cont->max * 2; //need fix
 	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &screen_size);
-	while (screen_size.ws_col > etalon + 32)
-		etalon += cont->max;
+	while (screen_size.ws_col > etalon + (cont->max * 2))
+		etalon += cont->max * 2;
 	result = (float)(cont->max * cont->size) / etalon;
 	if (result > cont->size)
 		cont->rows = cont->size;

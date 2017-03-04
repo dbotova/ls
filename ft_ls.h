@@ -31,7 +31,7 @@ typedef struct	s_content
 	int 		size;
 }				t_content;
 
-void	ft_ls(char *location, char *oprtions);
+int	ft_ls(char *location, char *oprtions);
 void	sort_dirent_array(t_content *cont);
 void	listfiles(char *location, char *oprtions, t_content *cont);
 void	take_args(char *arg1, char *arg2, char **location, char **options);
