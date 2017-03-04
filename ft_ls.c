@@ -12,14 +12,19 @@
 
 #include "ft_ls.h"
 
+static void get_path(char *path, char *name, char *d_name)
+{
+    ft_memset(path, 0, 1024);
+    ft_strcpy(path, name);
+    ft_strcat(path, "/");
+    ft_strcat(path, d_name);
+}
+
 void	ft_ls(char *location, char *options)
 {
 	int size;
 	struct dirent arr[ARR_SIZE];
 
-	// if (ft_strchr(oprtions, 'R'))
-	// 	size = listdir(location, arr, 0);
-	// else
 	size =  dirent_to_array(location, arr, options);
 	if (ft_strchr(options, 't'))
 		sort_dirent_array(arr, size);
