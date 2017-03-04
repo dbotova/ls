@@ -15,7 +15,8 @@
 static void get_path(char *path, char *name, char *d_name)
 {
     ft_memset(path, 0, 1024);
-    ft_strcpy(path, "/");
+    ft_strcpy(path, name);
+    ft_strcat(path, "/");
     ft_strcat(path, d_name);
 }
 
@@ -38,14 +39,9 @@ void	ft_ls(char *location, char *options)
 	int size;
 	t_content *cont;
 	cont = malloc(sizeof(t_content));
-	// struct dirent arr[ARR_SIZE];
-	//char path[1024];
 	int i;
 
 	i = 0;
-
-	printf("NEW RUN\n");
-
 	dirent_to_array(location, cont, options);
 	if (ft_strchr(options, 't'))
 		sort_dirent_array(cont);
@@ -57,8 +53,11 @@ void	ft_ls(char *location, char *options)
 			get_path(cont->path, location, cont->arr[i].d_name);
 			if (is_dir(cont->arr[i].d_name))
 			{
-				printf("path: %s\n", cont->path);
-				ft_ls(cont->path, options);
+				ft_printf("\n%s:\n", cont->path);
+				if (*location == '.' && ft_strlen(location) == 1)
+					ft_ls(cont->arr[i].d_name, options);
+				else
+					ft_ls(cont->path, options);
 			}
 			i++;
 		}

@@ -44,7 +44,7 @@ static void	get_row_num(t_content *cont)
 	etalon = 32;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &screen_size);
 	while (screen_size.ws_col > etalon + 32)
-		etalon += 32;
+		etalon += cont->max;
 	result = (float)(cont->max * cont->size) / etalon;
 	if (result > cont->size)
 		cont->rows = cont->size;
