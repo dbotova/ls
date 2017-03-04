@@ -22,18 +22,19 @@
 # define OPTINOS "alrRt"
 # define ARR_SIZE 1000
 
-typedef struct	s_args
+typedef struct	s_content
 {
-	DIR			*dir;
-	char		*options;
-	char		*name;
-}				t_args;
+	int			max;
+	char 		path[1024];
+	int 		rows;
+	struct 		dirent arr[ARR_SIZE];
+	int 		size;
+}				t_content;
 
 void	ft_ls(char *location, char *oprtions);
-void	sort_dirent_array(struct dirent arr[], int size);
-int 	listdir(char *name, struct dirent arr[], int i);
-void	listfiles(char *location, char *oprtions, struct dirent arr[], int count);
+void	sort_dirent_array(t_content *cont);
+void	listfiles(char *location, char *oprtions, t_content *cont);
 void	take_args(char *arg1, char *arg2, char **location, char **options);
-int		dirent_to_array(char *location, struct dirent arr[], char *options);
+void	dirent_to_array(char *location, t_content *cont, char *options);
 
 #endif

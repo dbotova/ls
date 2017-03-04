@@ -15,19 +15,54 @@
 static void get_path(char *path, char *name, char *d_name)
 {
     ft_memset(path, 0, 1024);
-    ft_strcpy(path, name);
-    ft_strcat(path, "/");
+    ft_strcpy(path, "/");
     ft_strcat(path, d_name);
+}
+
+static int	is_dir(char *path)
+{
+	struct stat statbuf;
+	if (stat(path, &statbuf) == -1)
+    {
+        perror(path);
+        exit(1);
+    }
+	if (S_ISDIR(statbuf.st_mode))
+		return (1);
+	else
+		return (0);
 }
 
 void	ft_ls(char *location, char *options)
 {
 	int size;
-	struct dirent arr[ARR_SIZE];
+	t_content *cont;
+	cont = malloc(sizeof(t_content));
+	// struct dirent arr[ARR_SIZE];
+	//char path[1024];
+	int i;
 
-	size =  dirent_to_array(location, arr, options);
+	i = 0;
+
+	printf("NEW RUN\n");
+
+	dirent_to_array(location, cont, options);
 	if (ft_strchr(options, 't'))
-		sort_dirent_array(arr, size);
-	listfiles(location, options, arr, size);
+		sort_dirent_array(cont);
+	listfiles(location, options, cont);
+	if (ft_strchr(options, 'R'))
+	{
+		while (i < cont->size)
+		{
+			get_path(cont->path, location, cont->arr[i].d_name);
+			if (is_dir(cont->arr[i].d_name))
+			{
+				printf("path: %s\n", cont->path);
+				ft_ls(cont->path, options);
+			}
+			i++;
+		}
+	}
+	SMART_FREE(cont);
 	exit(0);
 }

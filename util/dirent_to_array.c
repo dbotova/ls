@@ -12,7 +12,7 @@
 
 #include "../ft_ls.h"
 
-int	dirent_to_array(char *location, struct dirent arr[], char *options)
+void	dirent_to_array(char *location, t_content *cont, char *options)
 {
 	DIR *dir;
 	struct dirent *d;
@@ -29,8 +29,8 @@ int	dirent_to_array(char *location, struct dirent arr[], char *options)
 	while ((d = readdir(dir)) != NULL)
 	{
 		if (d->d_name[0] != '.' || ft_strchr(options, 'a') != NULL)
-			arr[i++] = *d;
+			cont->arr[i++] = *d;
 	}
 	closedir(dir);
-	return (i);
+	cont->size = i;
 }

@@ -12,53 +12,65 @@
 
 #include "../ft_ls.h"
 
-static int	is_dir(char *path)
+static	void find_max(t_content *cont)
 {
-	struct stat statbuf;
-	if (stat(path, &statbuf) == -1)
-    {
-        perror(path);
-        exit(1);
-    }
-	if (S_ISDIR(statbuf.st_mode))
-		return (1);
-	else
-		return (0);
+	int max;
+	int i;
+	int etalon;
+
+	i = 0;
+	etalon = 16;
+	max = (int)ft_strlen(cont->arr[i].d_name);
+	while (i < cont->size)
+	{
+		if ((int)ft_strlen(cont->arr[i].d_name) > max)
+			max = (int)ft_strlen(cont->arr[i].d_name);
+		i++;
+	}
+	while (max > etalon)
+	{
+		etalon += 8;
+	}
+	cont->max = etalon;
 }
 
-static int	get_row_num(int count)
+static void	get_row_num(t_content *cont)
 {
 	float result;
 	struct winsize screen_size;
+	int etalon;
 
+	find_max(cont);
+	etalon = 32;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &screen_size);
-	result = 16 * count / screen_size.ws_col;
-	if (result / (int)result > 0)
-		return ((int)result + 1);
+	while (screen_size.ws_col > etalon + 32)
+		etalon += 32;
+	result = (float)(cont->max * cont->size) / etalon;
+	if (result > cont->size)
+		cont->rows = cont->size;
+	else if (result / (int)result > 0)
+		cont->rows = ((int)result + 1);
 	else
-		return ((int)result);
+		cont->rows = ((int)result);
 }
-void	listfiles(char *location, char *options, struct dirent arr[], int count)
+void	listfiles(char *location, char *options, t_content *cont)
 {
 	int i;
 	int j;
 	int len;
-	int colums;
 
 	j = 0;
 	len = 0;
-	
-	colums = get_row_num(count);
-	while (j < colums)
+	get_row_num(cont);
+	while (j < cont->rows)
 	{
 		i = j;
-		while (i < count || i < count / colums)
+		while (i < cont->size || i < cont->size / cont->rows)
 		{
-			ft_printf("%-16s", arr[i].d_name);
-			i += colums;
+			ft_printf("%*s", cont->max * -1, cont->arr[i].d_name);
+			i += cont->rows;
 		}
 		j++;
 		ft_printf("\n");
 	}
-	exit(0);
 }

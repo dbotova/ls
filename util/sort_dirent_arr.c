@@ -12,7 +12,7 @@
 
 #include "../ft_ls.h"
 
-void	sort_dirent_array(struct dirent arr[], int size)
+void	sort_dirent_array(t_content *cont)
 {
 	int i;
 	int j;
@@ -21,18 +21,18 @@ void	sort_dirent_array(struct dirent arr[], int size)
 	struct stat jstatbuf;
 
 	i = 0;
-	j = size - 1;
+	j = cont->size - 1;
 	while (i < j)
 	{
-		stat(arr[i].d_name, &istatbuf);
+		stat(cont->arr[i].d_name, &istatbuf);
 		while (i < j)
 		{
-			stat(arr[i + 1].d_name, &jstatbuf);
+			stat(cont->arr[i + 1].d_name, &jstatbuf);
 			if(istatbuf.st_mtime < jstatbuf.st_mtime)
 			{
-				tmp = arr[i];
-				arr[i] = arr[i + 1];
-				arr[i + 1] = tmp;
+				tmp = cont->arr[i];
+				cont->arr[i] = cont->arr[i + 1];
+				cont->arr[i + 1] = tmp;
 			}
 			i++;
 		}
