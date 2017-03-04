@@ -17,6 +17,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <grp.h>
+# include <termios.h>
+# include <sys/ioctl.h>
 # define OPTINOS "alrRt"
 # define ARR_SIZE 1000
 
@@ -32,6 +34,6 @@ void	sort_dirent_array(struct dirent arr[], int size);
 int 	listdir(char *name, struct dirent arr[], int i);
 void	listfiles(char *location, char *oprtions, struct dirent arr[], int count);
 void	take_args(char *arg1, char *arg2, char **location, char **options);
-int		dirent_to_array(char *location, struct dirent arr[]);
+int		dirent_to_array(char *location, struct dirent arr[], char *options);
 
 #endif

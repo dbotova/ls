@@ -12,17 +12,17 @@
 
 #include "ft_ls.h"
 
-void	ft_ls(char *location, char *oprtions)
+void	ft_ls(char *location, char *options)
 {
 	int size;
 	struct dirent arr[ARR_SIZE];
 
-	if (ft_strchr(oprtions, 'R'))
-		size = listdir(location, arr, 0);
-	else
-		size =  dirent_to_array(location, arr);
-	if (ft_strchr(oprtions, 't'))
+	// if (ft_strchr(oprtions, 'R'))
+	// 	size = listdir(location, arr, 0);
+	// else
+	size =  dirent_to_array(location, arr, options);
+	if (ft_strchr(options, 't'))
 		sort_dirent_array(arr, size);
-	listfiles(location, oprtions, arr, size);
+	listfiles(location, options, arr, size);
 	exit(0);
 }

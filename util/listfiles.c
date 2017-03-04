@@ -12,52 +12,38 @@
 
 #include "../ft_ls.h"
 
-void	listfiles(char *location, char *oprtions, struct dirent arr[], int count)
+static int	get_row_num(int count, int size)
+{
+	float result;
+
+	result = 16 * count / size;
+	if (result / (int)result > 0)
+		return ((int)result + 1);
+	else
+		return ((int)result);
+}
+void	listfiles(char *location, char *options, struct dirent arr[], int count)
 {
 	int i;
+	int j;
+	int len;
+	int colums;
+	struct winsize screen_size;
 
-	i = 0;
-	if (!oprtions || ft_strchr(oprtions, 't'))
+	j = 0;
+	len = 0;
+	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &screen_size);
+	colums = get_row_num(count, screen_size.ws_col);
+	while (j < colums)
 	{
-		while (i < count)
+		i = j;
+		while (i < count || i < count / colums)
 		{
-			if (arr[i].d_name[0] != '.')
-				ft_printf("%s\n", arr[i].d_name);
-			i++;
+			ft_printf("%-16s", arr[i + colums].d_name);
+			i += colums;
 		}
+		j++;
+		ft_printf("\n");
 	}
-	else if (*oprtions == 'a')
-	{
-		while (i < count)
-			ft_printf("%s\n", arr[i++].d_name);
-	}
-	else
-		printf("ADD CODE HERE\n");
-	// DIR *dir;
-	// struct dirent *d;
-
-	// dir = opendir(location);
-	// if (!dir)
-	// {
-	// 	ft_printf("ft_ls: %s ", location);
-	// 	perror("");
-	// 	exit(1);
-	// }
-	// else if (!oprtions)
-	// {
-	// 	while ((d = readdir(dir)) != NULL)
-	// 	{
-	// 		if (d->d_name[0] != '.')
-	// 			ft_printf("%s\n", d->d_name);
-	// 	}
-	// }
-	// else if (*oprtions == 'a')
-	// {
-	// 	while ((d = readdir(dir)) != NULL)
-	// 		ft_printf("%s\n", d->d_name);
-	// }
-	// else
-	// 	printf("ADD CODE HERE\n");
-	// closedir(dir);
 	exit(0);
 }
