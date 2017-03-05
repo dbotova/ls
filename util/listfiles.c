@@ -41,10 +41,10 @@ static void	get_row_num(t_content *cont)
 	int etalon;
 
 	find_max(cont);
-	etalon = cont->max * 2; //need fix
+	etalon = 32; //need fix
 	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &screen_size);
-	while (screen_size.ws_col > etalon + (cont->max * 2))
-		etalon += cont->max * 2;
+	while (screen_size.ws_col > etalon + 32)
+		etalon += 32;
 	result = (float)(cont->max * cont->size) / etalon;
 	if (result > cont->size)
 		cont->rows = cont->size;
@@ -62,15 +62,20 @@ void	listfiles(char *location, char *options, t_content *cont)
 	j = 0;
 	len = 0;
 	get_row_num(cont);
-	while (j < cont->rows)
+	if (ft_strchr(options, 'l'))
+		print_long_format(cont);
+	else
 	{
-		i = j;
-		while (i < cont->size || i < cont->size / cont->rows)
+		while (j < cont->rows)
 		{
-			ft_printf("%*s", cont->max * -1, cont->arr[i].d_name);
-			i += cont->rows;
+			i = j;
+			while (i < cont->size || i < cont->size / cont->rows)
+			{
+				ft_printf("%*s", cont->max * -1, cont->arr[i].d_name);
+				i += cont->rows;
+			}
+			j++;
+			ft_printf("\n");
 		}
-		j++;
-		ft_printf("\n");
 	}
 }

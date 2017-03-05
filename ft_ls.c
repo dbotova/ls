@@ -39,11 +39,13 @@ int	ft_ls(char *location, char *options)
 {
 	int size;
 	t_content *cont;
-	cont = malloc(sizeof(t_content));
 	int i;
 
 	i = 0;
+	cont = malloc(sizeof(t_content));
 	dirent_to_array(location, cont, options);
+	if (cont->size == 0)
+		exit(0);
 	if (ft_strchr(options, 't'))
 		sort_dirent_array(cont);
 	listfiles(location, options, cont);
@@ -52,10 +54,8 @@ int	ft_ls(char *location, char *options)
 		while (i < cont->size)
 		{
 			get_path(cont->path, location, cont->arr[i].d_name);
-
-			//printf("\npath: %s location: %s\n", cont->path, location);
-
-			if (is_dir(cont->path))
+			if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
+				ft_strcmp(cont->arr[i].d_name, "..") != 0)
 			{
 				ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
 				if (ft_strcmp(location, ".") == 0)

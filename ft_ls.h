@@ -19,6 +19,9 @@
 # include <grp.h>
 # include <termios.h>
 # include <sys/ioctl.h>
+# include <pwd.h>
+# include <grp.h>
+# include <time.h>
 # define OPTINOS "alrRt"
 # define ARR_SIZE 1000
 
@@ -29,10 +32,13 @@ typedef struct	s_content
 	int 		rows;
 	struct 		dirent arr[ARR_SIZE];
 	int 		size;
+	int			total;
 }				t_content;
 
-int	ft_ls(char *location, char *oprtions);
+int		ft_ls(char *location, char *oprtions);
 void	sort_dirent_array(t_content *cont);
+void	create_cont(t_content *cont); //fix
+void	print_long_format(t_content *cont);
 void	listfiles(char *location, char *oprtions, t_content *cont);
 void	take_args(char *arg1, char *arg2, char **location, char **options);
 void	dirent_to_array(char *location, t_content *cont, char *options);

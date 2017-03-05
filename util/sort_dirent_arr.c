@@ -24,12 +24,16 @@ void	sort_dirent_array(t_content *cont)
 	j = cont->size - 1;
 	while (i < j)
 	{
+		printf("level 1\n");
 		stat(cont->arr[i].d_name, &istatbuf);
 		while (i < j)
 		{
+			printf("level 2\n");
 			stat(cont->arr[i + 1].d_name, &jstatbuf);
-			if(istatbuf.st_mtime < jstatbuf.st_mtime)
+			//if (ctime(&istatbuf.st_mtime) > ctime(&jstatbuf.st_mtime))
+			if(istatbuf.st_mtime > jstatbuf.st_mtime)
 			{
+				printf("level 3\n");
 				tmp = cont->arr[i];
 				cont->arr[i] = cont->arr[i + 1];
 				cont->arr[i + 1] = tmp;
