@@ -33,6 +33,7 @@ typedef struct	s_content
 	struct 		dirent arr[ARR_SIZE];
 	int 		size;
 	int			total;
+	int			w_size;
 }				t_content;
 
 int		ft_ls(char *location, char *oprtions);

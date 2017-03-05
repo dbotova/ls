@@ -4,13 +4,13 @@ static	void	print_time(struct stat buf)
 {
 	time_t raw_time;
 	time_t cur_time;
-	char *r_time;
-	char *c_time;
+	char r_time[25];
+	char c_time[25];
 
 	raw_time = buf.st_mtime;
 	cur_time = time(NULL);
-	r_time = ctime(&raw_time);
-	c_time = ctime(&cur_time);
+	ft_strcpy(r_time, ctime(&raw_time));
+	ft_strcpy(c_time, ctime(&cur_time));
 	ft_printf("%.3s %.2s ", r_time+4, r_time+8);
 	if (ft_strcmp(c_time+20, r_time+20) == 0)
 		ft_printf("%.5s ", r_time+11);
@@ -25,7 +25,7 @@ static	void	print_lnk_user_group_size(struct stat buf)
 
 	grp = getgrgid(buf.st_gid);
 	pwd = getpwuid(buf.st_uid);
-	ft_printf("%d %s  %s %7d ", buf.st_nlink, pwd->pw_name,
+	ft_printf("%3d %s  %s %7d ", buf.st_nlink, pwd->pw_name,
 		grp->gr_name, buf.st_size);
 }
 
@@ -67,5 +67,5 @@ void	print_long_format(t_content *cont)
 	    print_time(buf);
 	    ft_printf("%s\n", cont->arr[i - 1].d_name);
 	}
-	ft_printf("total %d\n", total);
+	ft_printf("total %d\n", total); //fix
 }
