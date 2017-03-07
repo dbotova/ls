@@ -46,10 +46,10 @@ int	ft_ls(char *location, char *options)
 	dirent_to_array(location, cont, options);
 	if (cont->size == 0)
 		exit(0);
-	if (ft_strchr(options, 't'))
+	if (has_option(options, 't'))
 		sort_dirent_array(cont);
 	listfiles(location, options, cont);
-	if (ft_strchr(options, 'R'))
+	if (has_option(options, 'R'))
 	{
 		while (i < cont->size)
 		{

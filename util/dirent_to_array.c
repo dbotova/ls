@@ -28,7 +28,7 @@ void	dirent_to_array(char *location, t_content *cont, char *options)
 	}
 	while ((d = readdir(dir)) != NULL)
 	{
-		if (d->d_name[0] != '.' || ft_strchr(options, 'a') != NULL)
+		if (d->d_name[0] != '.' || has_option(options, 'a'))
 			cont->arr[i++] = *d;
 	}
 	closedir(dir);
