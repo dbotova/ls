@@ -55,11 +55,13 @@ int				ft_ls(char *location, char *options)
 	cont = malloc(sizeof(t_content));
 	dirent_to_array(location, cont, options);
 	if (cont->size == 0)
-		exit(0);
-	if (has_option(options, 't'))
+		return (0);
+	if (has_option(options, 't') && !has_option(options, 'r'))
 		sort_dirent_array(cont);
-	if (has_option(options, 'r'))
+	if (has_option(options, 'r') && !has_option(options, 't'))
 		sort_by_name(cont);
+	if (has_option(options, 't') && has_option(options, 'r'))
+		sort_dirent_array_rev(cont);
 	if (has_option(options, 'l'))
 		print_long_format(location, cont);
 	else

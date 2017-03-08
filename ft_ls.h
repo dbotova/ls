@@ -38,6 +38,7 @@ typedef struct	s_content
 
 int				ft_ls(char *location, char *oprtions);
 void			sort_dirent_array(t_content *cont);
+void			sort_dirent_array_rev(t_content *cont);
 void			sort_by_name(t_content *cont);
 void			create_cont(t_content *cont); //fix
 void			print_long_format(char *location, t_content *cont);
