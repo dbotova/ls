@@ -36,7 +36,11 @@ static char	*check_options(char *arg1, char *arg2)
 		while (arg1[i] != 0)
 		{
 			if (!ft_strchr(OPTINOS, arg1[i]))
+			{
+				ft_printf("ft_ls: illegal options -- %c\n", arg1[i]);
+				ft_printf("usage: ls [-%s] [file...]\n", OPTINOS);
 				exit(1);
+			}
 			else
 				i++;
 		}
