@@ -12,11 +12,11 @@
 
 #include "../ft_ls.h"
 
-void	dirent_to_array(char *location, t_content *cont, char *options)
+void				dirent_to_array(char *location, t_content *cont, char *options)
 {
-	DIR *dir;
-	struct dirent *d;
-	int i;
+	DIR				*dir;
+	struct dirent	*d;
+	int				i;
 
 	i = 0;
 	dir = opendir(location);

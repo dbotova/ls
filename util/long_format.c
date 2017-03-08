@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   long_format.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/07 18:23:58 by dbotova           #+#    #+#             */
+/*   Updated: 2017/03/07 18:23:59 by dbotova          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_ls.h"
 
-static	void	print_time(struct stat buf)
+static	void		print_time(struct stat buf)
 {
 	time_t raw_time;
 	time_t cur_time;
@@ -18,10 +30,10 @@ static	void	print_time(struct stat buf)
 		ft_printf("%s", r_time+20);
 }
 
-static	void	print_lnk_user_group_size(struct stat buf)
+static	void		print_lnk_user_group_size(struct stat buf)
 {
-	struct group *grp;
-	struct passwd *pwd;
+	struct group	*grp;
+	struct passwd	*pwd;
 
 	grp = getgrgid(buf.st_gid);
 	pwd = getpwuid(buf.st_uid);
@@ -29,7 +41,7 @@ static	void	print_lnk_user_group_size(struct stat buf)
 		grp->gr_name, buf.st_size);
 }
 
-static	void	print_perms(struct stat buf)
+static	void		print_perms(struct stat buf)
 {
 	if (S_ISLNK(buf.st_mode))
 		ft_printf("l");
@@ -46,26 +58,27 @@ static	void	print_perms(struct stat buf)
     ft_printf((buf.st_mode & S_IXOTH) ? "x  " : "-  ");
 }
 
-void	print_long_format(t_content *cont)
+void			print_long_format(t_content *cont)
 {
-	struct stat buf;
-	int total;
-	int i;
+	struct		stat buf;
+	int			total;
+	int			i;
 
 	total = 0;
 	i = 0;
 	while (i < cont->size)
 	{
-		if (stat(cont->arr[i++].d_name, &buf) == -1)
+		if (stat(cont->arr[i].d_name, &buf) == -1)
 	    {
-	        perror(cont->arr[i - 1].d_name);
+	        perror(cont->arr[i].d_name);
 	        exit(1);
 	    }
 	    total += buf.st_blocks;
 	    print_perms(buf);
 	    print_lnk_user_group_size(buf);
 	    print_time(buf);
-	    ft_printf("%s\n", cont->arr[i - 1].d_name);
+	    ft_printf("%s\n", cont->arr[i].d_name);
+	    i++;
 	}
 	ft_printf("total %d\n", total); //fix
 }

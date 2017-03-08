@@ -46,7 +46,7 @@ static void		listdir(char *location, char *options, t_content *cont)
 		if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
 			ft_strcmp(cont->arr[i].d_name, "..") != 0)
 		{
-			ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
+			ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name);
 			if (ft_strcmp(location, ".") == 0)
 				ft_ls(cont->arr[i].d_name, options);
 			else
@@ -69,25 +69,12 @@ int				ft_ls(char *location, char *options)
 		sort_dirent_array(cont);
 	if (has_option(options, 'r'))
 		sort_by_name(cont);
-	listfiles(location, options, cont);
+	if (has_option(options, 'l'))
+		print_long_format(cont);
+	else
+		listfiles(location, options, cont);
 	if (has_option(options, 'R'))
-	{
 		listdir(location, options, cont);
-		// while (i < cont->size)
-		// {
-		// 	get_path(cont->path, location, cont->arr[i].d_name);
-		// 	if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
-		// 		ft_strcmp(cont->arr[i].d_name, "..") != 0)
-		// 	{
-		// 		ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
-		// 		if (ft_strcmp(location, ".") == 0)
-		// 			ft_ls(cont->arr[i].d_name, options);
-		// 		else
-		// 			ft_ls(cont->path, options);
-		// 	}
-		// 	i++;
-		// }
-	}
 	SMART_FREE(cont);
 	return(0);
 }

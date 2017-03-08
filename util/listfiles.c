@@ -62,20 +62,15 @@ void	listfiles(char *location, char *options, t_content *cont)
 	j = 0;
 	len = 0;
 	get_row_num(cont);
-	if (ft_strchr(options, 'l'))
-		print_long_format(cont);
-	else
+	while (j < cont->rows)
 	{
-		while (j < cont->rows)
+		i = j;
+		while (i < cont->size || i < cont->size / cont->rows)
 		{
-			i = j;
-			while (i < cont->size || i < cont->size / cont->rows)
-			{
-				ft_printf("%*s", cont->max * -1, cont->arr[i].d_name);
-				i += cont->rows;
-			}
-			j++;
-			ft_printf("\n");
+			ft_printf("%*s", cont->max * -1, cont->arr[i].d_name);
+			i += cont->rows;
 		}
+		j++;
+		ft_printf("\n");
 	}
 }
