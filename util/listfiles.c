@@ -12,11 +12,11 @@
 
 #include "../ft_ls.h"
 
-static	void find_max(t_content *cont)
+static	void		find_max(t_content *cont)
 {
-	int max;
-	int i;
-	int etalon;
+	int				max;
+	int				i;
+	int				etalon;
 
 	i = 0;
 	etalon = 16;
@@ -34,15 +34,15 @@ static	void find_max(t_content *cont)
 	cont->max = etalon;
 }
 
-static void	get_row_num(t_content *cont)
+static void			get_row_num(t_content *cont)
 {
-	float result;
-	struct winsize screen_size;
-	int etalon;
+	float			result;
+	struct winsize	screen_size;
+	int				etalon;
 
 	find_max(cont);
-	etalon = 32; //need fix
-	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *) &screen_size);
+	etalon = 32;
+	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *)&screen_size);
 	while (screen_size.ws_col > etalon + 32)
 		etalon += 32;
 	result = (float)(cont->max * cont->size) / etalon;
@@ -53,11 +53,12 @@ static void	get_row_num(t_content *cont)
 	else
 		cont->rows = ((int)result);
 }
-void	listfiles(char *location, char *options, t_content *cont)
+
+void				listfiles(char *location, char *options, t_content *cont)
 {
-	int i;
-	int j;
-	int len;
+	int				i;
+	int				j;
+	int				len;
 
 	j = 0;
 	len = 0;

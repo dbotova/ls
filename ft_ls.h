@@ -25,33 +25,33 @@
 # define OPTINOS "alrRtgu"
 # define ARR_SIZE 1000
 
-typedef struct	s_content
+typedef struct		s_content
 {
-	int			max;
-	int 		rows;
-	struct 		dirent arr[ARR_SIZE];
-	int 		size;
-	int			total;
-	int			w_size;
-}				t_content;
+	int				max;
+	int				rows;
+	struct dirent	arr[ARR_SIZE];
+	int				size;
+	int				total;
+	int				w_size;
+}					t_content;
 
-int				ft_ls(char *location, char *oprtions);
-void			sort_dirent_array(char *location, char *options,
-				t_content *cont);
-void			sort_dirent_array_rev(char *location,  char *options,
-				t_content *cont);
-void			sort_dirent_array_u(char *location, t_content *cont);
-void			sort_dirent_array_rev_u(char *location, t_content *cont);
-void			sort_by_name(t_content *cont);
-void			create_cont(t_content *cont); //fix
-void			print_long_format(char *location, char *options,
-				t_content *cont);
-int				has_option(char *options, char c);
-char			*get_path(char *name, char *d_name);
-void			listfiles(char *location, char *oprtions, t_content *cont);
-void			take_args(char *arg1, char *arg2, char **location,
-				char **options);
-void			dirent_to_array(char *location, t_content *cont,
-				char *options);
+int					ft_ls(char *location, char *oprtions);
+void				sort_dirent_array(char *location, char *options,
+					t_content *cont);
+void				sort_dirent_array_rev(char *location, char *options,
+					t_content *cont);
+void				sort_dirent_array_u(char *location, t_content *cont);
+void				sort_dirent_array_rev_u(char *location, t_content *cont);
+void				sort_by_name(t_content *cont);
+void				create_cont(t_content *cont);
+void				print_long_format(char *location, char *options,
+					t_content *cont);
+int					has_option(char *options, char c);
+char				*get_path(char *name, char *d_name);
+void				listfiles(char *location, char *oprtions, t_content *cont);
+void				take_args(char *arg1, char *arg2, char **location,
+					char **options);
+void				dirent_to_array(char *location, t_content *cont,
+					char *options);
 
 #endif

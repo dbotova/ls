@@ -15,11 +15,12 @@
 static int		is_dir(char *path)
 {
 	struct stat	statbuf;
+
 	if (stat(path, &statbuf) == -1)
-    {
-        perror(path);
-        exit(1);
-    }
+	{
+		perror(path);
+		exit(1);
+	}
 	if (S_ISDIR(statbuf.st_mode))
 		return (1);
 	else
@@ -53,7 +54,7 @@ int				ft_ls(char *location, char *options)
 {
 	int			size;
 	t_content	*cont;
-	
+
 	cont = malloc(sizeof(t_content));
 	dirent_to_array(location, cont, options);
 	if (cont->size == 0)
@@ -71,5 +72,5 @@ int				ft_ls(char *location, char *options)
 	if (has_option(options, 'R'))
 		listdir(location, options, cont);
 	SMART_FREE(cont);
-	return(0);
+	return (0);
 }

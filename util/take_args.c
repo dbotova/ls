@@ -53,7 +53,7 @@ static char	*check_options(char *arg1, char *arg2)
 void		take_args(char *arg1, char *arg2, char **location, char **options)
 {
 	char	*tmp;
-	
+
 	*location = ft_strdup(check_location(arg1, arg2));
 	tmp = check_options(arg1, arg2);
 	if (tmp)

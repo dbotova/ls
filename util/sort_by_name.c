@@ -21,20 +21,22 @@ static void			swap(t_content *cont, int left, int right)
 	cont->arr[right] = tmp;
 }
 
-static int			partition(int left, int right, char *pivot, t_content *cont) 
+static int			partition(int left, int right, char *pivot,
+					t_content *cont) 
 {
 	int				left_pointer;
 	int				right_pointer;
 
 	left_pointer = left - 1;
 	right_pointer = right;
-	while(42) 
+	while (42)
 	{
-		while(ft_strcmp(cont->arr[++left_pointer].d_name, pivot) > 0) 
+		while (ft_strcmp(cont->arr[++left_pointer].d_name, pivot) > 0)
 			;
-		while(right_pointer > 0 && ft_strcmp(cont->arr[--right_pointer].d_name, pivot) < 0) 
+		while (right_pointer > 0 &&
+			ft_strcmp(cont->arr[--right_pointer].d_name, pivot) < 0)
 			;
-		if(left_pointer >= right_pointer) 
+		if (left_pointer >= right_pointer)
 			break ;
 		else
 			swap(cont, left_pointer, right_pointer);
@@ -43,21 +45,21 @@ static int			partition(int left, int right, char *pivot, t_content *cont)
 	return (left_pointer);
 }
 
-static void			q_sort(int left, int right, t_content *cont) 
+static void			q_sort(int left, int right, t_content *cont)
 {
 	int				partition_point;
 	char			*pivot;
 
-   if(right-left <= 0)
-      return ;   
-   else 
-   {
-   		pivot = ft_strdup(cont->arr[right].d_name);
-   		partition_point = partition(left, right, pivot, cont);
-   		q_sort(left, partition_point - 1, cont);
-   		q_sort(partition_point + 1, right, cont);
-   }
-   SMART_FREE(pivot);        
+	if (right - left <= 0)
+		return ;
+	else
+	{
+		pivot = ft_strdup(cont->arr[right].d_name);
+		partition_point = partition(left, right, pivot, cont);
+		q_sort(left, partition_point - 1, cont);
+		q_sort(partition_point + 1, right, cont);
+	}
+	SMART_FREE(pivot);
 }
 
 void				sort_by_name(t_content *cont)
