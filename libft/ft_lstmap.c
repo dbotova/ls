@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 14:11:15 by dbotova           #+#    #+#             */
-/*   Updated: 2017/03/08 14:11:16 by dbotova          ###   ########.fr       */
+/*   Created: 2016/10/02 13:16:03 by dbotova           #+#    #+#             */
+/*   Updated: 2016/10/02 13:16:04 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ls.h"
+#include "libft.h"
 
-char		*get_path(char *name, char *d_name)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	char	*path;
+	t_list *result;
+	t_list *tmp;
+	t_list *prev;
 
-	path = (char*)malloc(sizeof(char) * 1024);
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-    return(path);
+	result = NULL;
+	if (lst)
+	{
+		result = f(lst);
+		prev = result;
+		lst = lst->next;
+		while (lst)
+		{
+			tmp = f(lst);
+			prev->next = tmp;
+			prev = tmp;
+			lst = lst->next;
+		}
+		prev->next = NULL;
+	}
+	return (result);
 }

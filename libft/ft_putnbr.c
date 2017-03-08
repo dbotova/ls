@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 14:11:15 by dbotova           #+#    #+#             */
-/*   Updated: 2017/03/08 14:11:16 by dbotova          ###   ########.fr       */
+/*   Created: 2016/09/30 19:38:37 by dbotova           #+#    #+#             */
+/*   Updated: 2016/09/30 19:38:38 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ls.h"
+#include "libft.h"
 
-char		*get_path(char *name, char *d_name)
+void	ft_putnbr(int n)
 {
-	char	*path;
+	long nb;
 
-	path = (char*)malloc(sizeof(char) * 1024);
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-    return(path);
+	nb = n;
+	if (n < 0)
+	{
+		ft_putchar('-');
+		nb *= -1;
+	}
+	if (nb >= 10)
+	{
+		ft_putnbr(nb / 10);
+		ft_putnbr(nb % 10);
+	}
+	else
+		ft_putchar(nb + '0');
 }

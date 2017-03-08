@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 14:11:15 by dbotova           #+#    #+#             */
-/*   Updated: 2017/03/08 14:11:16 by dbotova          ###   ########.fr       */
+/*   Created: 2016/09/26 16:47:45 by dbotova           #+#    #+#             */
+/*   Updated: 2016/09/26 16:47:51 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ls.h"
+#include "libft.h"
 
-char		*get_path(char *name, char *d_name)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	char	*path;
-
-	path = (char*)malloc(sizeof(char) * 1024);
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-    return(path);
+	if (!*needle)
+		return ((char *)haystack);
+	while (len && *haystack)
+	{
+		if (ft_strncmp((char *)haystack, (char *)needle,
+			(unsigned int)ft_strlen(needle)) == 0 && len >= ft_strlen(needle))
+			return ((char *)haystack);
+		else
+			haystack++;
+		len--;
+	}
+	return (NULL);
 }

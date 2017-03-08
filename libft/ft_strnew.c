@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 14:11:15 by dbotova           #+#    #+#             */
-/*   Updated: 2017/03/08 14:11:16 by dbotova          ###   ########.fr       */
+/*   Created: 2016/09/28 22:23:16 by dbotova           #+#    #+#             */
+/*   Updated: 2016/09/28 22:23:18 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ls.h"
+#include "libft.h"
 
-char		*get_path(char *name, char *d_name)
+char	*ft_strnew(size_t size)
 {
-	char	*path;
+	char *str;
 
-	path = (char*)malloc(sizeof(char) * 1024);
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-    return(path);
+	str = (char *)malloc(sizeof(char) * (size + 1));
+	if (str)
+	{
+		ft_bzero(str, size + 1);
+		return (str);
+	}
+	else
+		return (NULL);
 }

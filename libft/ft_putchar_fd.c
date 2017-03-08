@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 14:11:15 by dbotova           #+#    #+#             */
-/*   Updated: 2017/03/08 14:11:16 by dbotova          ###   ########.fr       */
+/*   Created: 2016/09/30 19:37:54 by dbotova           #+#    #+#             */
+/*   Updated: 2016/09/30 19:37:56 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ls.h"
+#include "libft.h"
 
-char		*get_path(char *name, char *d_name)
+void	ft_putchar_fd(char c, int fd)
 {
-	char	*path;
+	unsigned char l;
 
-	path = (char*)malloc(sizeof(char) * 1024);
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-    return(path);
+	l = (unsigned char)c;
+	write(fd, &l, 1);
 }

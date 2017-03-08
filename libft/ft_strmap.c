@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbotova <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 14:11:15 by dbotova           #+#    #+#             */
-/*   Updated: 2017/03/08 14:11:16 by dbotova          ###   ########.fr       */
+/*   Created: 2016/09/29 18:50:22 by dbotova           #+#    #+#             */
+/*   Updated: 2016/09/29 18:50:23 by dbotova          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ls.h"
+#include "libft.h"
 
-char		*get_path(char *name, char *d_name)
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	char	*path;
+	char	*result;
+	size_t	size;
+	size_t	idx;
 
-	path = (char*)malloc(sizeof(char) * 1024);
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-    return(path);
+	idx = 0;
+	if (s)
+	{
+		size = ft_strlen(s);
+		result = (char *)malloc(sizeof(char) * (size + 1));
+		if (result)
+		{
+			while (idx < size)
+			{
+				result[idx] = f(s[idx]);
+				idx++;
+			}
+			result[size] = '\0';
+			return (result);
+		}
+		else
+			return (NULL);
+	}
+	else
+		return (NULL);
 }
