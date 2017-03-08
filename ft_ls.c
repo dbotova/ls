@@ -29,19 +29,21 @@ static int		is_dir(char *path)
 static void		listdir(char *location, char *options, t_content *cont)
 {
 	int			i;
+	char		*path;
 
 	i = 0;
+	path = (char*)malloc(sizeof(char) * 1024);
 	while (i < cont->size)
 	{
-		get_path(cont->path, location, cont->arr[i].d_name);
-		if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
+		path = ft_strdup(get_path(location, cont->arr[i].d_name));
+		if (is_dir(path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
 			ft_strcmp(cont->arr[i].d_name, "..") != 0)
 		{
 			ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name);
 			if (ft_strcmp(location, ".") == 0)
 				ft_ls(cont->arr[i].d_name, options);
 			else
-				ft_ls(cont->path, options);
+				ft_ls(path, options);
 		}
 		i++;
 	}
@@ -57,11 +59,11 @@ int				ft_ls(char *location, char *options)
 	if (cont->size == 0)
 		return (0);
 	if (has_option(options, 't') && !has_option(options, 'r'))
-		sort_dirent_array(cont);
+		sort_dirent_array(location, cont);
 	if (has_option(options, 'r') && !has_option(options, 't'))
 		sort_by_name(cont);
 	if (has_option(options, 't') && has_option(options, 'r'))
-		sort_dirent_array_rev(cont);
+		sort_dirent_array_rev(location, cont);
 	if (has_option(options, 'l'))
 		print_long_format(location, cont);
 	else

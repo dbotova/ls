@@ -68,10 +68,9 @@ void			print_long_format(char *location, t_content *cont)
 	i = 0;
 	while (i < cont->size)
 	{
-		get_path(cont->path, location, cont->arr[i].d_name);
-		if (stat(cont->path, &buf) == -1)
+		if (stat(get_path(location, cont->arr[i].d_name), &buf) == -1)
 	    {
-	        perror(cont->path);
+	        perror(get_path(location, cont->arr[i].d_name));
 	        exit(1);
 	    }
 	    total += buf.st_blocks;
