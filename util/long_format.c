@@ -58,7 +58,7 @@ static	void		print_perms(struct stat buf)
     ft_printf((buf.st_mode & S_IXOTH) ? "x  " : "-  ");
 }
 
-void			print_long_format(t_content *cont)
+void			print_long_format(char *location, t_content *cont)
 {
 	struct		stat buf;
 	int			total;
@@ -68,9 +68,10 @@ void			print_long_format(t_content *cont)
 	i = 0;
 	while (i < cont->size)
 	{
-		if (stat(cont->arr[i].d_name, &buf) == -1)
+		get_path(cont->path, location, cont->arr[i].d_name);
+		if (stat(cont->path, &buf) == -1)
 	    {
-	        perror(cont->arr[i].d_name);
+	        perror(cont->path);
 	        exit(1);
 	    }
 	    total += buf.st_blocks;

@@ -40,8 +40,9 @@ int				ft_ls(char *location, char *oprtions);
 void			sort_dirent_array(t_content *cont);
 void			sort_by_name(t_content *cont);
 void			create_cont(t_content *cont); //fix
-void			print_long_format(t_content *cont);
+void			print_long_format(char *location, t_content *cont);
 int				has_option(char *options, char c);
+void			get_path(char *path, char *name, char *d_name);
 void			listfiles(char *location, char *oprtions, t_content *cont);
 void			take_args(char *arg1, char *arg2, char **location, char **options);
 void			dirent_to_array(char *location, t_content *cont, char *options);

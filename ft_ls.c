@@ -12,15 +12,6 @@
 
 #include "ft_ls.h"
 
-static void		get_path(char *path, char *name, char *d_name)
-{
-    ft_memset(path, 0, 1024);
-	ft_strcpy(path, name);
-	if (name[ft_strlen(name) -1] != '/')
-		ft_strcat(path, "/");
-    ft_strcat(path, d_name);
-}
-
 static int		is_dir(char *path)
 {
 	struct stat	statbuf;
@@ -70,7 +61,7 @@ int				ft_ls(char *location, char *options)
 	if (has_option(options, 'r'))
 		sort_by_name(cont);
 	if (has_option(options, 'l'))
-		print_long_format(cont);
+		print_long_format(location, cont);
 	else
 		listfiles(location, options, cont);
 	if (has_option(options, 'R'))
