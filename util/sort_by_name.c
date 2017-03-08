@@ -21,10 +21,8 @@ static void			swap(t_content *cont, int left, int right)
 	cont->arr[right] = tmp;
 }
 
-static int			partition(int left, int right, long long pivot,
-	t_content *cont) 
+static int			partition(int left, int right, char *pivot, t_content *cont) 
 {
-	struct stat		statbuf;
 	int				left_pointer;
 	int				right_pointer;
 
@@ -32,12 +30,10 @@ static int			partition(int left, int right, long long pivot,
 	right_pointer = right;
 	while(42) 
 	{
-		stat(cont->arr[++left_pointer].d_name, &statbuf);
-		while(statbuf.st_mtime > pivot) 
-			stat(cont->arr[++left_pointer].d_name, &statbuf);
-		stat(cont->arr[--right_pointer].d_name, &statbuf);
-		while(right_pointer > 0 && statbuf.st_mtime < pivot) 
-			stat(cont->arr[--right_pointer].d_name, &statbuf);
+		while(ft_strcmp(cont->arr[++left_pointer].d_name, pivot) > 0) 
+			;
+		while(right_pointer > 0 && ft_strcmp(cont->arr[--right_pointer].d_name, pivot) < 0) 
+			;
 		if(left_pointer >= right_pointer) 
 			break ;
 		else
@@ -50,22 +46,21 @@ static int			partition(int left, int right, long long pivot,
 static void			q_sort(int left, int right, t_content *cont) 
 {
 	int				partition_point;
-	long long		pivot;
-	struct stat		statbuf;
+	char			*pivot;
 
    if(right-left <= 0)
       return ;   
    else 
    {
-   		stat(cont->arr[right].d_name, &statbuf);
-   		pivot = statbuf.st_mtime;
+   		pivot = ft_strdup(cont->arr[right].d_name);
    		partition_point = partition(left, right, pivot, cont);
    		q_sort(left, partition_point - 1, cont);
    		q_sort(partition_point + 1, right, cont);
-   }        
+   }
+   SMART_FREE(pivot);        
 }
 
-void				sort_dirent_array(t_content *cont)
+void				sort_by_name(t_content *cont)
 {
 	q_sort(0, cont->size - 1, cont);
 }

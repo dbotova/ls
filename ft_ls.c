@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-static void get_path(char *path, char *name, char *d_name)
+static void		get_path(char *path, char *name, char *d_name)
 {
     ft_memset(path, 0, 1024);
 	ft_strcpy(path, name);
@@ -21,9 +21,9 @@ static void get_path(char *path, char *name, char *d_name)
     ft_strcat(path, d_name);
 }
 
-static int	is_dir(char *path)
+static int		is_dir(char *path)
 {
-	struct stat statbuf;
+	struct stat	statbuf;
 	if (stat(path, &statbuf) == -1)
     {
         perror(path);
@@ -35,36 +35,58 @@ static int	is_dir(char *path)
 		return (0);
 }
 
-int	ft_ls(char *location, char *options)
+static void		listdir(char *location, char *options, t_content *cont)
 {
-	int size;
-	t_content *cont;
-	int i;
+	int			i;
 
 	i = 0;
+	while (i < cont->size)
+	{
+		get_path(cont->path, location, cont->arr[i].d_name);
+		if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
+			ft_strcmp(cont->arr[i].d_name, "..") != 0)
+		{
+			ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
+			if (ft_strcmp(location, ".") == 0)
+				ft_ls(cont->arr[i].d_name, options);
+			else
+				ft_ls(cont->path, options);
+		}
+		i++;
+	}
+}
+
+int				ft_ls(char *location, char *options)
+{
+	int			size;
+	t_content	*cont;
+	
 	cont = malloc(sizeof(t_content));
 	dirent_to_array(location, cont, options);
 	if (cont->size == 0)
 		exit(0);
 	if (has_option(options, 't'))
 		sort_dirent_array(cont);
+	if (has_option(options, 'r'))
+		sort_by_name(cont);
 	listfiles(location, options, cont);
 	if (has_option(options, 'R'))
 	{
-		while (i < cont->size)
-		{
-			get_path(cont->path, location, cont->arr[i].d_name);
-			if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
-				ft_strcmp(cont->arr[i].d_name, "..") != 0)
-			{
-				ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
-				if (ft_strcmp(location, ".") == 0)
-					ft_ls(cont->arr[i].d_name, options);
-				else
-					ft_ls(cont->path, options);
-			}
-			i++;
-		}
+		listdir(location, options, cont);
+		// while (i < cont->size)
+		// {
+		// 	get_path(cont->path, location, cont->arr[i].d_name);
+		// 	if (is_dir(cont->path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
+		// 		ft_strcmp(cont->arr[i].d_name, "..") != 0)
+		// 	{
+		// 		ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name); //FIX
+		// 		if (ft_strcmp(location, ".") == 0)
+		// 			ft_ls(cont->arr[i].d_name, options);
+		// 		else
+		// 			ft_ls(cont->path, options);
+		// 	}
+		// 	i++;
+		// }
 	}
 	SMART_FREE(cont);
 	return(0);
