@@ -69,7 +69,11 @@ static void			q_sort(int left, int right, t_content *cont, char *location)
    }        
 }
 
-void				sort_dirent_array(char *location, t_content *cont)
+void				sort_dirent_array(char *location,  char *options,
+					t_content *cont)
 {
-	q_sort(0, cont->size - 1, cont, location);
+	if (has_option(options, 'u'))
+		sort_dirent_array_u(location, cont);
+	else
+		q_sort(0, cont->size - 1, cont, location);
 }
