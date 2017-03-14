@@ -52,7 +52,6 @@ static void		listdir(char *location, char *options, t_content *cont)
 
 int				ft_ls(char *location, char *options)
 {
-	int			size;
 	t_content	*cont;
 
 	create_cont(&cont, location);
@@ -68,7 +67,7 @@ int				ft_ls(char *location, char *options)
 	if (has_option(options, 'l') || has_option(options, 'g'))
 		print_long_format(location, options, cont);
 	else
-		listfiles(location, options, cont);
+		listfiles(options, cont);
 	if (has_option(options, 'R'))
 		listdir(location, options, cont);
 	free_cont(cont);

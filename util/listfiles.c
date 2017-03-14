@@ -54,7 +54,7 @@ static void			get_row_num(t_content *cont)
 		cont->rows = ((int)result);
 }
 
-void				listfiles(char *location, char *options, t_content *cont)
+void				listfiles(char *options, t_content *cont)
 {
 	int				i;
 	int				j;

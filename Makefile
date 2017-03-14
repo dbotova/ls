@@ -14,7 +14,6 @@ OBJS =	ft_ls.o 															\
 		main.o 																\
 		./util/create_cont.o 												\
 		./util/dirent_to_array.o 											\
-		./util/dirent_to_array.o 											\
 		./util/get_path.o 													\
 		./util/has_option.o 												\
 		./util/listfiles.o 													\
@@ -27,7 +26,8 @@ OBJS =	ft_ls.o 															\
 		./util/sort_dirent_arr_rev_c.o 										\
 		./util/sort_dirent_arr_u.o 											\
 		./util/sort_dirent_arr_rev_u.o 										\
-		./util/take_args.c
+		./util/take_args.o 													\
+		./util/free_cont.o
 LIBS = ./libft.a
 
 HEADERS = ft_ls.h ./libft/libft.h
