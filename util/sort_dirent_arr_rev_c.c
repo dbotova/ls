@@ -34,12 +34,12 @@ static int			partition(int left, int right, long long pivot,
 	{
 		stat(get_path(cont->location, cont->arr[++left_pointer].d_name),
 			&statbuf);
-		while (statbuf.st_atime < pivot)
+		while (statbuf.st_ctime < pivot)
 			stat(get_path(cont->location, cont->arr[++left_pointer].d_name),
 			&statbuf);
 		stat(get_path(cont->location, cont->arr[--right_pointer].d_name),
 			&statbuf);
-		while (right_pointer > 0 && statbuf.st_atime > pivot)
+		while (right_pointer > 0 && statbuf.st_ctime > pivot)
 			stat(get_path(cont->location, cont->arr[--right_pointer].d_name),
 			&statbuf);
 		if (left_pointer >= right_pointer)
@@ -62,14 +62,14 @@ static void			q_sort(int left, int right, t_content *cont)
 	else
 	{
 		stat(get_path(cont->location, cont->arr[right].d_name), &statbuf);
-		pivot = statbuf.st_atime;
+		pivot = statbuf.st_ctime;
 		partition_point = partition(left, right, pivot, cont);
 		q_sort(left, partition_point - 1, cont);
 		q_sort(partition_point + 1, right, cont);
 	}
 }
 
-void				sort_dirent_array_rev_u(t_content *cont)
+void				sort_dirent_array_rev_c(t_content *cont)
 {
 	q_sort(0, cont->size - 1, cont);
 }

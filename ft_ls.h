@@ -22,8 +22,8 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
-# define OPTINOS "alrRtgu"
-# define ARR_SIZE 1000
+# define OPTINOS "alrRtguc"
+# define ARR_SIZE 10000
 
 typedef struct		s_content
 {
@@ -31,20 +31,21 @@ typedef struct		s_content
 	int				rows;
 	struct dirent	arr[ARR_SIZE];
 	int				size;
-	int				total;
 	int				w_size;
 	char			*location;
 }					t_content;
 
 int					ft_ls(char *location, char *oprtions);
-void				sort_dirent_array(char *location, char *options,
-					t_content *cont);
-void				sort_dirent_array_rev(char *location, char *options,
-					t_content *cont);
-void				sort_dirent_array_u(char *location, t_content *cont);
-void				sort_dirent_array_rev_u(char *location, t_content *cont);
+void				sort_dirent_array(char *options, t_content *cont);
+void				sort_dirent_array_rev(char *options, t_content *cont);
+void				sort_dirent_array_u(t_content *cont);
+void				sort_dirent_array_rev_u(t_content *cont);
+void				sort_dirent_array_c(t_content *cont);
+void				sort_dirent_array_rev_c(t_content *cont);
 void				sort_by_name(t_content *cont);
-void				create_cont(t_content *cont);
+void				sort_by_name_rev(t_content *cont);
+void				create_cont(t_content **cont, char *location);
+void				free_cont(t_content *cont);
 void				print_long_format(char *location, char *options,
 					t_content *cont);
 int					has_option(char *options, char c);

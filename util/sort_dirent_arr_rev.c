@@ -22,7 +22,7 @@ static void			swap(t_content *cont, int left, int right)
 }
 
 static int			partition(int left, int right, long long pivot,
-	t_content *cont, char *location)
+					t_content *cont)
 {
 	struct stat		statbuf;
 	int				left_pointer;
@@ -32,15 +32,15 @@ static int			partition(int left, int right, long long pivot,
 	right_pointer = right;
 	while (42)
 	{
-		stat(get_path(location, cont->arr[++left_pointer].d_name),
+		stat(get_path(cont->location, cont->arr[++left_pointer].d_name),
 			&statbuf);
 		while (statbuf.st_mtime < pivot)
-			stat(get_path(location, cont->arr[++left_pointer].d_name),
+			stat(get_path(cont->location, cont->arr[++left_pointer].d_name),
 			&statbuf);
-		stat(get_path(location, cont->arr[--right_pointer].d_name),
+		stat(get_path(cont->location, cont->arr[--right_pointer].d_name),
 			&statbuf);
 		while (right_pointer > 0 && statbuf.st_mtime > pivot)
-			stat(get_path(location, cont->arr[--right_pointer].d_name),
+			stat(get_path(cont->location, cont->arr[--right_pointer].d_name),
 			&statbuf);
 		if (left_pointer >= right_pointer)
 			break ;
@@ -51,8 +51,7 @@ static int			partition(int left, int right, long long pivot,
 	return (left_pointer);
 }
 
-static void			q_sort(int left, int right, t_content *cont,
-					char *location)
+static void			q_sort(int left, int right, t_content *cont)
 {
 	int				partition_point;
 	long long		pivot;
@@ -62,19 +61,20 @@ static void			q_sort(int left, int right, t_content *cont,
 		return ;
 	else
 	{
-		stat(get_path(location, cont->arr[right].d_name), &statbuf);
+		stat(get_path(cont->location, cont->arr[right].d_name), &statbuf);
 		pivot = statbuf.st_mtime;
-		partition_point = partition(left, right, pivot, cont, location);
-		q_sort(left, partition_point - 1, cont, location);
-		q_sort(partition_point + 1, right, cont, location);
+		partition_point = partition(left, right, pivot, cont);
+		q_sort(left, partition_point - 1, cont);
+		q_sort(partition_point + 1, right, cont);
 	}
 }
 
-void				sort_dirent_array_rev(char *location, char *options,
-					t_content *cont)
+void				sort_dirent_array_rev(char *options, t_content *cont)
 {
 	if (has_option(options, 'u'))
-		sort_dirent_array_rev_u(location, cont);
+		sort_dirent_array_rev_u(cont);
+	if (has_option(options, 'c'))
+		sort_dirent_array_rev_c(cont);
 	else
-		q_sort(0, cont->size - 1, cont, location);
+		q_sort(0, cont->size - 1, cont);
 }

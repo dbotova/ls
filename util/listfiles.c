@@ -29,7 +29,7 @@ static	void		find_max(t_content *cont)
 	}
 	while (max > etalon)
 	{
-		etalon += 8;
+		etalon += 16;
 	}
 	cont->max = etalon;
 }
@@ -43,8 +43,8 @@ static void			get_row_num(t_content *cont)
 	find_max(cont);
 	etalon = 32;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, (char *)&screen_size);
-	while (screen_size.ws_col > etalon + 32)
-		etalon += 32;
+	while (screen_size.ws_col > etalon + 16)
+		etalon += 16;
 	result = (float)(cont->max * cont->size) / etalon;
 	if (result > cont->size)
 		cont->rows = cont->size;
@@ -63,6 +63,13 @@ void				listfiles(char *location, char *options, t_content *cont)
 	j = 0;
 	len = 0;
 	get_row_num(cont);
+	if (has_option(options, 'u') || has_option(options, 'c'))
+	{
+		if (has_option(options, 'r'))
+			sort_by_name_rev(cont);
+		else
+			sort_by_name(cont);
+	}
 	while (j < cont->rows)
 	{
 		i = j;

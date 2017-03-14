@@ -22,7 +22,7 @@ static void			swap(t_content *cont, int left, int right)
 }
 
 static int			partition(int left, int right, char *pivot,
-					t_content *cont) 
+					t_content *cont)
 {
 	int				left_pointer;
 	int				right_pointer;
@@ -31,10 +31,10 @@ static int			partition(int left, int right, char *pivot,
 	right_pointer = right;
 	while (42)
 	{
-		while (ft_strcmp(cont->arr[++left_pointer].d_name, pivot) > 0)
+		while (ft_strcmp(cont->arr[++left_pointer].d_name, pivot) < 0)
 			;
 		while (right_pointer > 0 &&
-			ft_strcmp(cont->arr[--right_pointer].d_name, pivot) < 0)
+			ft_strcmp(cont->arr[--right_pointer].d_name, pivot) > 0)
 			;
 		if (left_pointer >= right_pointer)
 			break ;

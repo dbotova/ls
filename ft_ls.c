@@ -55,22 +55,22 @@ int				ft_ls(char *location, char *options)
 	int			size;
 	t_content	*cont;
 
-	cont = malloc(sizeof(t_content));
+	create_cont(&cont, location);
 	dirent_to_array(location, cont, options);
 	if (cont->size == 0)
 		return (0);
 	if (has_option(options, 't') && !has_option(options, 'r'))
-		sort_dirent_array(location, options, cont);
+		sort_dirent_array(options, cont);
 	if (has_option(options, 'r') && !has_option(options, 't'))
-		sort_by_name(cont);
+		sort_by_name_rev(cont);
 	if (has_option(options, 't') && has_option(options, 'r'))
-		sort_dirent_array_rev(location, options, cont);
+		sort_dirent_array_rev(options, cont);
 	if (has_option(options, 'l') || has_option(options, 'g'))
 		print_long_format(location, options, cont);
 	else
 		listfiles(location, options, cont);
 	if (has_option(options, 'R'))
 		listdir(location, options, cont);
-	SMART_FREE(cont);
+	free_cont(cont);
 	return (0);
 }

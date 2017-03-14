@@ -19,10 +19,12 @@ static	void		print_time(struct stat buf, char *options)
 	char			r_time[25];
 	char			c_time[25];
 
-	if (!has_option(options, 'u'))
-		raw_time = buf.st_mtime;
-	else
+	if (has_option(options, 'u'))
 		raw_time = buf.st_atime;
+	if (!has_option(options, 'c'))
+		raw_time = buf.st_ctime;
+	else
+		raw_time = buf.st_mtime;
 	cur_time = time(NULL);
 	ft_strcpy(r_time, ctime(&raw_time));
 	ft_strcpy(c_time, ctime(&cur_time));
@@ -72,6 +74,9 @@ void				print_long_format(char *location, char *options,
 
 	total = 0;
 	i = 0;
+	if ((has_option(options, 'u') || has_option(options, 'c'))
+		&& !has_option(options, 't'))
+		sort_by_name(cont);
 	while (i < cont->size)
 	{
 		if (stat(get_path(location, cont->arr[i].d_name), &buf) == -1)
