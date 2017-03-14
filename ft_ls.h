@@ -33,6 +33,7 @@ typedef struct		s_content
 	int				size;
 	int				total;
 	int				w_size;
+	char			*location;
 }					t_content;
 
 int					ft_ls(char *location, char *oprtions);
