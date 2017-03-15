@@ -46,7 +46,8 @@ SRC =	libft.h																\
 		$(RPATH)/ft_undef_read.c $(RPATH)/ft_wchar_read.c 					\
 		$(RPATH)/ft_wstr_read.c $(RPATH)/ft_hex_read.c						\
 		$(UPATH)/ft_create_jump_table.c $(UPATH)/ft_getflags.c 				\
-		$(UPATH)/ft_newflagslst.c $(RPATH)/ft_str_read.c ft_itoa_base.c
+		$(UPATH)/ft_newflagslst.c $(RPATH)/ft_str_read.c ft_itoa_base.c 	\
+		get_next_word.c get_next_line.c
 
 OBJ = 	ft_atoi.o ft_bzero.o ft_isalnum.o ft_isalpha.o ft_isascii.o			\
 		ft_isdigit.o ft_isprint.o ft_ispunct.o ft_isspace.o ft_itoa.o		\
@@ -74,7 +75,7 @@ OBJ = 	ft_atoi.o ft_bzero.o ft_isalnum.o ft_isalpha.o ft_isascii.o			\
 		ft_ltoa_base.o ft_cunsigned_print.o ft_nbrsize.o ft_power.o 		\
 		ft_putnstr.o ft_putwchar.o ft_putwstr.o ft_ultoa_base.o 			\
 		ft_wcharlen.o ft_wstrlen.o ft_create_jump_table.o ft_getflags.o 	\
-		ft_newflagslst.o ft_num_separete.o ft_itoa_base.o
+		ft_newflagslst.o ft_num_separete.o ft_itoa_base.o get_next_word.o
 
 NAME = libft.a
 

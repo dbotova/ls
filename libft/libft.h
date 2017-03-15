@@ -90,6 +90,7 @@ typedef struct			s_flags
 int						ft_printf(char *args, ...);
 char					*ft_ltoa_base(long long n, int base);
 int						get_next_line(const int fd, char **line);
+int						get_next_word(const char *line, char **word);
 int						ft_strncmp(char *s1, char *s2, size_t n);
 int						ft_atoi(char *str);
 size_t					ft_strlen(const char *str);
