@@ -32,6 +32,7 @@ typedef struct		s_content
 	struct dirent	arr[ARR_SIZE];
 	int				size;
 	int				w_size;
+	long long		total;
 	char			*location;
 }					t_content;
 
@@ -50,7 +51,7 @@ void				print_long_format(char *location, char *options,
 					t_content *cont);
 int					has_option(char *options, char c);
 char				*get_path(char *name, char *d_name);
-void				listfiles(char *oprtions, t_content *cont);
+void				listfiles(t_content *cont);
 void				take_args(char *arg1, char *arg2, char **location,
 					char **options);
 void				dirent_to_array(char *location, t_content *cont,

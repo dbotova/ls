@@ -69,27 +69,32 @@ void				print_long_format(char *location, char *options,
 					t_content *cont)
 {
 	struct stat		buf;
-	int				total;
 	int				i;
+	char			*lname;
 
-	total = 0;
 	i = 0;
-	if ((has_option(options, 'u') || has_option(options, 'c'))
-		&& !has_option(options, 't'))
-		sort_by_name(cont);
+	ft_printf("total %d\n", cont->total);
+	lname = NULL;
 	while (i < cont->size)
 	{
-		if (stat(get_path(location, cont->arr[i].d_name), &buf) == -1)
+		if (lstat(get_path(location, cont->arr[i].d_name), &buf) == -1)
 		{
 			perror(get_path(location, cont->arr[i].d_name));
 			exit(1);
 		}
-		total += buf.st_blocks;
 		print_perms(buf);
 		print_lnk_user_group_size(buf, options);
 		print_time(buf, options);
 		ft_printf("%s\n", cont->arr[i].d_name);
+		if (S_ISLNK(buf.st_mode))
+		{
+			if ((readlink(get_path(location, cont->arr[i].d_name), lname, buf.st_size + 1)) < 0)
+			{
+				perror("ft_ls: ");
+				exit(1);
+			}
+			ft_printf(" -> %s", lname);
+		}
 		i++;
 	}
-	ft_printf("total %d\n", total);
 }

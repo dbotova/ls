@@ -71,9 +71,11 @@ static void			q_sort(int left, int right, t_content *cont)
 
 void				sort_dirent_array(char *options, t_content *cont)
 {
-	if (has_option(options, 'u'))
+	if (has_option(options, 'r'))
+		sort_dirent_array_rev(options, cont);
+	else if (has_option(options, 'u'))
 		sort_dirent_array_u(cont);
-	if (has_option(options, 'c'))
+	else if (has_option(options, 'c'))
 		sort_dirent_array_c(cont);
 	else
 		q_sort(0, cont->size - 1, cont);

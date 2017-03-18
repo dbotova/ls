@@ -22,6 +22,7 @@ static int			read_line(char *buf, char **word)
 		*word = ft_strsub(buf, 0, nword - buf);
 		ft_strncpy(buf, nword + 1, ft_strlen(nword) - 1);
 		buf[ft_strlen(nword) - 1] = 0;
+		SMART_FREE(buf);
 		return (ft_strlen(*word) + 1);
 	}
 	return (0);

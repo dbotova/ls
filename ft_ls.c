@@ -58,16 +58,16 @@ int				ft_ls(char *location, char *options)
 	dirent_to_array(location, cont, options);
 	if (cont->size == 0)
 		return (0);
-	if (has_option(options, 't') && !has_option(options, 'r'))
+	if (has_option(options, 't'))
 		sort_dirent_array(options, cont);
-	if (has_option(options, 'r') && !has_option(options, 't'))
+	else if (has_option(options, 'r'))
 		sort_by_name_rev(cont);
-	if (has_option(options, 't') && has_option(options, 'r'))
-		sort_dirent_array_rev(options, cont);
+	else
+		sort_by_name(cont);
 	if (has_option(options, 'l') || has_option(options, 'g'))
 		print_long_format(location, options, cont);
 	else
-		listfiles(options, cont);
+		listfiles(cont);
 	if (has_option(options, 'R'))
 		listdir(location, options, cont);
 	free_cont(cont);

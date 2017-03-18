@@ -28,8 +28,7 @@ OBJS =	ft_ls.o 															\
 		./util/sort_dirent_arr_rev_u.o 										\
 		./util/take_args.o 													\
 		./util/free_cont.o
-LIBFT=./libft/libft.a
-LIBS = $(LIBFT)
+LIBS = ./libft.a
 
 HEADERS = ft_ls.h ./libft/libft.h
 
@@ -39,10 +38,7 @@ NAME = ft_ls
 
 all: $(NAME)
 
-$(LIBFT):
-	$(MAKE) -C ./libft
-
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 $(OBJ): $(HEADERS)
