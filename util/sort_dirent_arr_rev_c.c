@@ -66,7 +66,7 @@ static void			q_sort(int left, int right, t_content *cont)
 		return ;
 	else
 	{
-		stat(get_path(cont->location, cont->arr[right].d_name), &statbuf);
+		get_buf(cont, right, &statbuf);
 		pivot = statbuf.st_ctime;
 		partition_point = partition(left, right, pivot, cont);
 		q_sort(left, partition_point - 1, cont);
