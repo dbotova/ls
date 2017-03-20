@@ -21,6 +21,15 @@ static void			swap(t_content *cont, int left, int right)
 	cont->arr[right] = tmp;
 }
 
+static void	get_buf(t_content *cont, int pointer, struct stat *statbuf)
+{
+	char			*tmp;
+
+	tmp = get_path(cont->location, cont->arr[pointer].d_name);
+	stat(tmp, statbuf);
+	SMART_FREE(tmp);
+}
+
 static int			partition(int left, int right, long long pivot,
 					t_content *cont)
 {
@@ -32,16 +41,12 @@ static int			partition(int left, int right, long long pivot,
 	right_pointer = right;
 	while (42)
 	{
-		stat(get_path(cont->location, cont->arr[++left_pointer].d_name),
-			&statbuf);
+		get_buf(cont, ++left_pointer, &statbuf);
 		while (statbuf.st_mtime < pivot)
-			stat(get_path(cont->location, cont->arr[++left_pointer].d_name),
-			&statbuf);
-		stat(get_path(cont->location, cont->arr[--right_pointer].d_name),
-			&statbuf);
+			get_buf(cont, ++left_pointer, &statbuf);
+		get_buf(cont, --right_pointer, &statbuf);
 		while (right_pointer > 0 && statbuf.st_mtime > pivot)
-			stat(get_path(cont->location, cont->arr[--right_pointer].d_name),
-			&statbuf);
+			get_buf(cont, --right_pointer, &statbuf);
 		if (left_pointer >= right_pointer)
 			break ;
 		else

@@ -22,9 +22,9 @@ static	void		print_time(struct stat buf, char *options)
 	if (has_option(options, 'u'))
 		raw_time = buf.st_atime;
 	if (!has_option(options, 'c'))
-		raw_time = buf.st_ctime;
-	else
 		raw_time = buf.st_mtime;
+	else
+		raw_time = buf.st_ctime;
 	cur_time = time(NULL);
 	ft_strcpy(r_time, ctime(&raw_time));
 	ft_strcpy(c_time, ctime(&cur_time));
