@@ -32,7 +32,7 @@ LIBS = ./libft.a
 
 HEADERS = ft_ls.h ./libft/libft.h
 
-CFLAGS += -Wall -Werror -Wextra
+CFLAGS += -Wall -Werror -Wextra -g -ggdb
 
 NAME = ft_ls
 

@@ -21,10 +21,14 @@ int			main(int argc, char **argv)
 	i = 0;
 	location = (char**)malloc(sizeof(char*) * PATH_MAX);
 	take_args(argc, argv, location, &options);
-	printf("options: %s\n", options);
 	while (location[i] != NULL)
 	{
-		ft_ls(location[i++], options);
+		if (location[1])
+			printf("%s:\n", location[i]);
+		ft_ls(location[i], options);
+		if (location[i + 1])
+			printf("\n");
+		i++;
 	}
 	while(location[i] != NULL)
 		SMART_FREE(location[i++]);

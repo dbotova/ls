@@ -50,11 +50,7 @@ static void	check_options(int argc, char **argv, char **options)
 	{
 		j = 1;
 		while (argv[i][j] != 0)
-		{
-			*options[m] = argv[i][j];
-			j++;
-			m++;
-		}
+			(*options)[m++] = argv[i][j++];
 		i++;
 	}
 }
