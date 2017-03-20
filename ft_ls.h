@@ -22,6 +22,8 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
+# include <fcntl.h>
+# include <limits.h>
 # define OPTINOS "alrRtguc"
 # define ARR_SIZE 10000
 
@@ -52,7 +54,7 @@ void				print_long_format(char *location, char *options,
 int					has_option(char *options, char c);
 char				*get_path(char *name, char *d_name);
 void				listfiles(t_content *cont);
-void				take_args(char *arg1, char *arg2, char **location,
+void				take_args(int argc, char **argv, char **location,
 					char **options);
 void				dirent_to_array(char *location, t_content *cont,
 					char *options);

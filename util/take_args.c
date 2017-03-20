@@ -12,50 +12,55 @@
 
 #include "../ft_ls.h"
 
-static char	*check_location(char *arg1, char *arg2)
-{
-	if (!arg1 && !arg2)
-		return (".");
-	else if (!arg2 && arg1[0] != '-')
-		return (arg1);
-	else if (arg1[0] == '-' && !arg2)
-		return (".");
-	else
-		return (arg2);
-}
-
-static char	*check_options(char *arg1, char *arg2)
+static void	check_location(int argc, char **argv, char **location)
 {
 	int		i;
+	int		j;
 
 	i = 1;
-	if (!arg1 && !arg2)
-		return (NULL);
-	else if (arg1 && *arg1 == '-')
-	{
-		while (arg1[i] != 0)
-		{
-			if (!ft_strchr(OPTINOS, arg1[i]))
-			{
-				ft_printf("ft_ls: illegal options -- %c\n", arg1[i]);
-				ft_printf("usage: ls [-%s] [file...]\n", OPTINOS);
-				exit(1);
-			}
-			else
-				i++;
-		}
-		return (arg1 + 1);
-	}
+	j = 0;
+	if (!argv[i])
+		location[j] = ft_strdup("./");
 	else
-		return (NULL);
+	{
+		while( i < argc && argv[i][0] == '-')
+			i++;
+		while(i < argc)
+		{
+			location[j] = ft_strdup(argv[i]);
+			i++;
+			j++;
+		}
+	}
+	if (j == 0)
+		location[j] = ft_strdup("./");
 }
 
-void		take_args(char *arg1, char *arg2, char **location, char **options)
+static void	check_options(int argc, char **argv, char **options)
 {
-	char	*tmp;
+	int		i;
+	int		j;
+	int		m;
 
-	*location = ft_strdup(check_location(arg1, arg2));
-	tmp = check_options(arg1, arg2);
-	if (tmp)
-		*options = ft_strdup(tmp);
+	i = 1;
+	m = 0;
+	*options = (char*)malloc(sizeof(char) * ft_strlen(OPTINOS));
+	ft_memset(*options, 0, ft_strlen(OPTINOS));
+	while (i < argc && argv[i][0] == '-')
+	{
+		j = 1;
+		while (argv[i][j] != 0)
+		{
+			*options[m] = argv[i][j];
+			j++;
+			m++;
+		}
+		i++;
+	}
+}
+
+void		take_args(int argc, char **argv, char **location, char **options)
+{
+	check_options(argc, argv, options);
+	check_location(argc, argv, location);
 }

@@ -14,20 +14,21 @@
 
 int			main(int argc, char **argv)
 {
-	char	*location;
+	char	**location;
 	char	*options;
+	int		i;
 
-	if (argc == 1)
-		take_args(NULL, NULL, &location, &options);
-	else if (argc == 2)
-		take_args(argv[1], NULL, &location, &options);
-	else if (argc == 3)
-		take_args(argv[1], argv[2], &location, &options);
-	else
-		exit(1);
-	ft_ls(location, options);
+	i = 0;
+	location = (char**)malloc(sizeof(char*) * PATH_MAX);
+	take_args(argc, argv, location, &options);
+	printf("options: %s\n", options);
+	while (location[i] != NULL)
+	{
+		ft_ls(location[i++], options);
+	}
+	while(location[i] != NULL)
+		SMART_FREE(location[i++]);
 	SMART_FREE(location);
-	if (options)
-		SMART_FREE(options);
+	SMART_FREE(options);
 	return (0);
 }

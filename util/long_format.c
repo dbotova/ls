@@ -65,16 +65,30 @@ static	void		print_perms(struct stat buf)
 	ft_printf((buf.st_mode & S_IXOTH) ? "x  " : "-  ");
 }
 
+static void			print_link(struct stat buf, int i, t_content *cont)
+{
+	char			*lname;
+
+	lname = NULL;
+	lname = malloc(sizeof(char) * (buf.st_size + 1));
+	if ((readlink(cont->arr[i].d_name, lname, buf.st_size + 1)) < 0)
+		perror("ft_ls");
+	else
+	{
+		lname[buf.st_size] = 0;
+		ft_printf("%s -> %s\n", cont->arr[i].d_name, lname);
+	}
+	SMART_FREE(lname);
+}
+
 void				print_long_format(char *location, char *options,
 					t_content *cont)
 {
 	struct stat		buf;
 	int				i;
-	char			*lname;
 
 	i = 0;
 	ft_printf("total %d\n", cont->total);
-	lname = NULL;
 	while (i < cont->size)
 	{
 		if (lstat(get_path(location, cont->arr[i].d_name), &buf) == -1)
@@ -85,16 +99,10 @@ void				print_long_format(char *location, char *options,
 		print_perms(buf);
 		print_lnk_user_group_size(buf, options);
 		print_time(buf, options);
-		ft_printf("%s\n", cont->arr[i].d_name);
 		if (S_ISLNK(buf.st_mode))
-		{
-			if ((readlink(get_path(location, cont->arr[i].d_name), lname, buf.st_size + 1)) < 0)
-			{
-				perror("ft_ls: ");
-				exit(1);
-			}
-			ft_printf(" -> %s", lname);
-		}
+			print_link(buf, i, cont);
+		else
+			ft_printf("%s\n", cont->arr[i].d_name);
 		i++;
 	}
 }
