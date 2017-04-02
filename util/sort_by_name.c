@@ -45,7 +45,7 @@ static int			partition(int left, int right, char *pivot,
 	return (left_pointer);
 }
 
-static void			q_sort(int left, int right, t_content *cont)
+void			sort_by_name(int left, int right, t_content *cont)
 {
 	int				partition_point;
 	char			*pivot;
@@ -56,13 +56,8 @@ static void			q_sort(int left, int right, t_content *cont)
 	{
 		pivot = ft_strdup(cont->arr[right].d_name);
 		partition_point = partition(left, right, pivot, cont);
-		q_sort(left, partition_point - 1, cont);
-		q_sort(partition_point + 1, right, cont);
+		sort_by_name(left, partition_point - 1, cont);
+		sort_by_name(partition_point + 1, right, cont);
 	}
 	SMART_FREE(pivot);
-}
-
-void				sort_by_name(t_content *cont)
-{
-	q_sort(0, cont->size - 1, cont);
 }

@@ -45,8 +45,8 @@ void				sort_dirent_array_u(t_content *cont);
 void				sort_dirent_array_rev_u(t_content *cont);
 void				sort_dirent_array_c(t_content *cont);
 void				sort_dirent_array_rev_c(t_content *cont);
-void				sort_by_name(t_content *cont);
-void				sort_by_name_rev(t_content *cont);
+void				sort_by_name(int left, int right, t_content *cont);
+void				sort_by_name_rev(int left, int right, t_content *cont);
 void				create_cont(t_content **cont, char *location);
 void				free_cont(t_content *cont);
 void				print_long_format(char *location, char *options,

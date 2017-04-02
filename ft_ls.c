@@ -61,9 +61,9 @@ int				ft_ls(char *location, char *options)
 	if (has_option(options, 't'))
 		sort_dirent_array(options, cont);
 	else if (has_option(options, 'r'))
-		sort_by_name_rev(cont);
+		sort_by_name_rev(0, cont->size - 1, cont);
 	else
-		sort_by_name(cont);
+		sort_by_name(0, cont->size - 1, cont);
 	if (has_option(options, 'l') || has_option(options, 'g'))
 		print_long_format(location, options, cont);
 	else
