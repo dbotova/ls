@@ -26,7 +26,7 @@ static void	get_buf(t_content *cont, int pointer, struct stat *statbuf, struct d
 	char			*tmp;
 
 	tmp = get_path(cont->location, arr[pointer].d_name);
-	stat(tmp, statbuf);
+	lstat(tmp, statbuf);
 	SMART_FREE(tmp);
 }
 
@@ -47,29 +47,36 @@ static void			partition(t_content *cont, struct dirent *arr, int size)
 	{
 		get_buf(cont, i, &statbuf, arr);
 		while (statbuf.st_mtime > pivot)
-		{
-			i++;
-			get_buf(cont, i, &statbuf, arr);
-		}
+			get_buf(cont, ++i, &statbuf, arr);
 		get_buf(cont, j, &statbuf, arr);
 		while (statbuf.st_mtime < pivot)
-		{
-			j--;
-			get_buf(cont, j, &statbuf, arr);
-		}
+			get_buf(cont, --j, &statbuf, arr);
 		if (i >= j)
 			break ;
-		swap(arr, i, j);
-		i++;
-		j--;
+		swap(arr, i++, j--);
 	}
 	partition(cont, arr, i);
 	partition(cont, arr + i, size - i);
 }
 
-static void			q_sort(t_content *cont)
+static void final_sort(t_content *cont)
 {
-	partition(cont, cont->arr, cont->size);
+	// int cur;
+	int i;
+	//struct stat		statbuf;
+	// int time;
+
+	i = 0;
+	// cur = 1;
+	// time = 0;
+	while (i < cont->size)
+	{
+		//get_buf(cont, i++, &statbuf);
+		if (O_NOATIME(cont->arr[i].d_name))
+			printf("%s\n", cont->arr[i].d_name);
+	}
+
+
 }
 
 void				sort_dirent_array(char *options, t_content *cont)
@@ -81,5 +88,5 @@ void				sort_dirent_array(char *options, t_content *cont)
 	else if (has_option(options, 'c'))
 		sort_dirent_array_c(cont);
 	else
-		q_sort(cont);
+		partition(cont, cont->arr, cont->size);
 }

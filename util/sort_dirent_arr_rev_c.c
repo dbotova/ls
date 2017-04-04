@@ -47,32 +47,19 @@ static void			partition(t_content *cont, struct dirent *arr, int size)
 	{
 		get_buf(cont, i, &statbuf, arr);
 		while (statbuf.st_ctime < pivot)
-		{
-			i++;
-			get_buf(cont, i, &statbuf, arr);
-		}
+			get_buf(cont, ++i, &statbuf, arr);
 		get_buf(cont, j, &statbuf, arr);
 		while (statbuf.st_ctime > pivot)
-		{
-			j--;
-			get_buf(cont, j, &statbuf, arr);
-		}
+			get_buf(cont, --j, &statbuf, arr);
 		if (i >= j)
 			break ;
-		swap(arr, i, j);
-		i++;
-		j--;
+		swap(arr, i++, j--);
 	}
 	partition(cont, arr, i);
 	partition(cont, arr + i, size - i);
 }
 
-static void			q_sort(t_content *cont)
+void			sort_dirent_array_rev_c(t_content *cont)
 {
 	partition(cont, cont->arr, cont->size);
-}
-
-void				sort_dirent_array_rev_c(t_content *cont)
-{
-	q_sort(cont);
 }
