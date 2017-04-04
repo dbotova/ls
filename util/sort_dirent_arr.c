@@ -61,21 +61,23 @@ static void			partition(t_content *cont, struct dirent *arr, int size)
 
 static void final_sort(t_content *cont)
 {
-	// int cur;
 	int i;
-	//struct stat		statbuf;
-	// int time;
+	int cur;
+	struct stat		statbuf;
+	struct stat		statbuf_next;
 
 	i = 0;
-	// cur = 1;
-	// time = 0;
-	while (i < cont->size)
+	while (i + 1 < cont->size)
 	{
-		//get_buf(cont, i++, &statbuf);
-		if (O_NOATIME(cont->arr[i].d_name))
-			printf("%s\n", cont->arr[i].d_name);
+		cur = i;
+		get_buf(cont, i, &statbuf, cont->arr);
+		get_buf(cont, i, &statbuf_next, cont->arr);
+		while (statbuf.st_mtime == statbuf_next.st_mtime)
+		{
+			printf("cur: %s next: %s\n", cont->arr[cur].d_name, cont->arr[i].d_name);
+			get_buf(cont, ++i, &statbuf_next, cont->arr);
+		}
 	}
-
 
 }
 
@@ -88,5 +90,8 @@ void				sort_dirent_array(char *options, t_content *cont)
 	else if (has_option(options, 'c'))
 		sort_dirent_array_c(cont);
 	else
+	{
 		partition(cont, cont->arr, cont->size);
+		final_sort(cont);
+	}
 }
