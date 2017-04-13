@@ -30,7 +30,7 @@ int			main(int argc, char **argv)
 			printf("\n");
 		i++;
 	}
-	while(location[i] != NULL)
+	while (location[i] != NULL)
 		SMART_FREE(location[i++]);
 	SMART_FREE(location);
 	SMART_FREE(options);

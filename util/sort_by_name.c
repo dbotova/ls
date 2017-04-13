@@ -45,7 +45,7 @@ static int			partition(int left, int right, char *pivot,
 	return (left_pointer);
 }
 
-void			sort_by_name(int left, int right, t_content *cont)
+void				sort_by_name(int left, int right, t_content *cont)
 {
 	int				partition_point;
 	char			*pivot;

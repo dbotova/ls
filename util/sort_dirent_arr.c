@@ -21,7 +21,8 @@ static void			swap(struct dirent *arr, int left, int right)
 	arr[right] = tmp;
 }
 
-static void	get_buf(t_content *cont, int pointer, struct stat *statbuf, struct dirent *arr)
+static void			get_buf(t_content *cont, int pointer, struct stat *statbuf,
+	struct dirent *arr)
 {
 	char			*tmp;
 
@@ -59,28 +60,6 @@ static void			partition(t_content *cont, struct dirent *arr, int size)
 	partition(cont, arr + i, size - i);
 }
 
-static void final_sort(t_content *cont)
-{
-	int i;
-	int cur;
-	struct stat		statbuf;
-	struct stat		statbuf_next;
-
-	i = 0;
-	while (i + 1 < cont->size)
-	{
-		cur = i;
-		get_buf(cont, i, &statbuf, cont->arr);
-		get_buf(cont, i, &statbuf_next, cont->arr);
-		while (statbuf.st_mtime == statbuf_next.st_mtime)
-		{
-			printf("cur: %s next: %s\n", cont->arr[cur].d_name, cont->arr[i].d_name);
-			get_buf(cont, ++i, &statbuf_next, cont->arr);
-		}
-	}
-
-}
-
 void				sort_dirent_array(char *options, t_content *cont)
 {
 	if (has_option(options, 'r'))
@@ -90,8 +69,5 @@ void				sort_dirent_array(char *options, t_content *cont)
 	else if (has_option(options, 'c'))
 		sort_dirent_array_c(cont);
 	else
-	{
 		partition(cont, cont->arr, cont->size);
-		final_sort(cont);
-	}
 }

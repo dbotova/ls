@@ -12,9 +12,9 @@
 
 #include "../ft_ls.h"
 
-int	has_option(char *options, char c)
+int			has_option(char *options, char c)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = options;
 	if (ft_strchr(tmp, c))

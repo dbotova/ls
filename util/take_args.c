@@ -23,9 +23,9 @@ static void	check_location(int argc, char **argv, char **location)
 		location[j] = ft_strdup("./");
 	else
 	{
-		while( i < argc && argv[i][0] == '-')
+		while (i < argc && argv[i][0] == '-')
 			i++;
-		while(i < argc)
+		while (i < argc)
 		{
 			location[j] = ft_strdup(argv[i]);
 			i++;

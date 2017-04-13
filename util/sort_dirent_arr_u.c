@@ -21,7 +21,8 @@ static void			swap(struct dirent *arr, int left, int right)
 	arr[right] = tmp;
 }
 
-static void	get_buf(t_content *cont, int pointer, struct stat *statbuf, struct dirent *arr)
+static void			get_buf(t_content *cont, int pointer, struct stat *statbuf,
+	struct dirent *arr)
 {
 	char			*tmp;
 
@@ -59,7 +60,7 @@ static void			partition(t_content *cont, struct dirent *arr, int size)
 	partition(cont, arr + i, size - i);
 }
 
-void			sort_dirent_array_u(t_content *cont)
+void				sort_dirent_array_u(t_content *cont)
 {
 	partition(cont, cont->arr, cont->size);
 }

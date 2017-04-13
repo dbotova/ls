@@ -21,7 +21,8 @@ static void			swap(struct dirent *arr, int left, int right)
 	arr[right] = tmp;
 }
 
-static void	get_buf(t_content *cont, int pointer, struct stat *statbuf, struct dirent *arr)
+static void			get_buf(t_content *cont, int pointer, struct stat *statbuf,
+	struct dirent *arr)
 {
 	char			*tmp;
 
