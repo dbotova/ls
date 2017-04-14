@@ -12,6 +12,21 @@
 
 #include "../ft_ls.h"
 
+static	void		take_time(char *location, char *path, t_content *cont,
+					int i)
+{
+	char			*full_path;
+	struct stat		statbuf;
+
+	full_path = get_path(location, path);
+	lstat(full_path, &statbuf);
+	cont->arr[i].mtime = statbuf.st_mtime;
+	cont->arr[i].atime = statbuf.st_atime;
+	cont->arr[i].ctime = statbuf.st_ctime;
+	SMART_FREE(full_path);
+
+}
+
 int					dir_stat(char *location, char *path, struct stat *buf)
 {
 	int				result;
@@ -47,8 +62,9 @@ void				dirent_to_array(char *location, t_content *cont,
 			exit(1);
 		if (d->d_name[0] != '.' || has_option(options, 'a'))
 		{
-			cont->arr[i++] = *d;
+			cont->arr[i++].item = *d;
 			cont->total += buf.st_blocks;
+			take_time(location, d->d_name, cont, i);
 		}
 	}
 	closedir(dir);

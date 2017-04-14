@@ -71,12 +71,12 @@ static void			print_link(struct stat buf, int i, t_content *cont)
 
 	lname = NULL;
 	lname = malloc(sizeof(char) * (buf.st_size + 1));
-	if ((readlink(cont->arr[i].d_name, lname, buf.st_size + 1)) < 0)
+	if ((readlink(cont->arr[i].item.d_name, lname, buf.st_size + 1)) < 0)
 		perror("ft_ls");
 	else
 	{
 		lname[buf.st_size] = 0;
-		ft_printf("%s -> %s\n", cont->arr[i].d_name, lname);
+		ft_printf("%s -> %s\n", cont->arr[i].item.d_name, lname);
 	}
 	SMART_FREE(lname);
 }
@@ -91,9 +91,9 @@ void				print_long_format(char *location, char *options,
 	ft_printf("total %d\n", cont->total);
 	while (i < cont->size)
 	{
-		if (lstat(get_path(location, cont->arr[i].d_name), &buf) == -1)
+		if (lstat(get_path(location, cont->arr[i].item.d_name), &buf) == -1)
 		{
-			perror(get_path(location, cont->arr[i].d_name));
+			perror(get_path(location, cont->arr[i].item.d_name));
 			exit(1);
 		}
 		print_perms(buf);
@@ -102,7 +102,7 @@ void				print_long_format(char *location, char *options,
 		if (S_ISLNK(buf.st_mode))
 			print_link(buf, i, cont);
 		else
-			ft_printf("%s\n", cont->arr[i].d_name);
+			ft_printf("%s\n", cont->arr[i].item.d_name);
 		i++;
 	}
 }

@@ -27,11 +27,20 @@
 # define OPTINOS "alrRtguc"
 # define ARR_SIZE 10000
 
+typedef struct		s_items
+{
+	struct dirent 	item;
+	time_t			mtime;
+	time_t			ctime;
+	time_t			atime;
+
+}					t_items;
+
 typedef struct		s_content
 {
 	int				max;
 	int				rows;
-	struct dirent	arr[ARR_SIZE];
+	t_items			arr[ARR_SIZE];
 	int				size;
 	int				w_size;
 	long long		total;

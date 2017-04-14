@@ -36,13 +36,13 @@ static void		listdir(char *location, char *options, t_content *cont)
 	path = (char*)malloc(sizeof(char) * 1024);
 	while (i < cont->size)
 	{
-		path = ft_strdup(get_path(location, cont->arr[i].d_name));
-		if (is_dir(path) && ft_strcmp(cont->arr[i].d_name, ".") != 0 &&
-			ft_strcmp(cont->arr[i].d_name, "..") != 0)
+		path = ft_strdup(get_path(location, cont->arr[i].item.d_name));
+		if (is_dir(path) && ft_strcmp(cont->arr[i].item.d_name, ".") != 0 &&
+			ft_strcmp(cont->arr[i].item.d_name, "..") != 0)
 		{
-			ft_printf("\n%s/%s:\n", location, cont->arr[i].d_name);
+			ft_printf("\n%s/%s:\n", location, cont->arr[i].item.d_name);
 			if (ft_strcmp(location, ".") == 0)
-				ft_ls(cont->arr[i].d_name, options);
+				ft_ls(cont->arr[i].item.d_name, options);
 			else
 				ft_ls(path, options);
 		}

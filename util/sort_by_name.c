@@ -16,9 +16,9 @@ static void			swap(t_content *cont, int left, int right)
 {
 	struct dirent	tmp;
 
-	tmp = cont->arr[left];
-	cont->arr[left] = cont->arr[right];
-	cont->arr[right] = tmp;
+	tmp = cont->arr[left].item;
+	cont->arr[left].item = cont->arr[right].item;
+	cont->arr[right].item = tmp;
 }
 
 static int			partition(int left, int right, char *pivot,
@@ -31,10 +31,10 @@ static int			partition(int left, int right, char *pivot,
 	right_pointer = right;
 	while (42)
 	{
-		while (ft_strcmp(cont->arr[++left_pointer].d_name, pivot) < 0)
+		while (ft_strcmp(cont->arr[++left_pointer].item.d_name, pivot) < 0)
 			;
 		while (right_pointer > 0 &&
-			ft_strcmp(cont->arr[--right_pointer].d_name, pivot) > 0)
+			ft_strcmp(cont->arr[--right_pointer].item.d_name, pivot) > 0)
 			;
 		if (left_pointer >= right_pointer)
 			break ;
@@ -54,7 +54,7 @@ void				sort_by_name(int left, int right, t_content *cont)
 		return ;
 	else
 	{
-		pivot = ft_strdup(cont->arr[right].d_name);
+		pivot = ft_strdup(cont->arr[right].item.d_name);
 		partition_point = partition(left, right, pivot, cont);
 		sort_by_name(left, partition_point - 1, cont);
 		sort_by_name(partition_point + 1, right, cont);

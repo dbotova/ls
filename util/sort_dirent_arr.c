@@ -12,46 +12,30 @@
 
 #include "../ft_ls.h"
 
-static void			swap(struct dirent *arr, int left, int right)
+static void			swap(t_items *arr, int left, int right)
 {
-	struct dirent	tmp;
+	t_items	tmp;
 
 	tmp = arr[left];
 	arr[left] = arr[right];
 	arr[right] = tmp;
 }
 
-static void			get_buf(t_content *cont, int pointer, struct stat *statbuf,
-	struct dirent *arr)
+static void			partition(t_content *cont, t_items *arr, int size)
 {
-	char			*tmp;
-
-	tmp = get_path(cont->location, arr[pointer].d_name);
-	lstat(tmp, statbuf);
-	SMART_FREE(tmp);
-}
-
-static void			partition(t_content *cont, struct dirent *arr, int size)
-{
-	struct stat		statbuf;
 	int				i;
 	int				j;
 	long long		pivot;
 
 	i = 0;
 	j = size - 1;
-	get_buf(cont, size / 2, &statbuf, arr);
-	pivot = statbuf.st_mtime;
+	pivot = cont->arr[size / 2].mtime;
 	if (size < 2)
 		return ;
 	while (42)
 	{
-		get_buf(cont, i, &statbuf, arr);
-		while (statbuf.st_mtime > pivot)
-			get_buf(cont, ++i, &statbuf, arr);
-		get_buf(cont, j, &statbuf, arr);
-		while (statbuf.st_mtime < pivot)
-			get_buf(cont, --j, &statbuf, arr);
+		while (cont->arr[i].mtime > pivot) ++i;
+		while (cont->arr[j].mtime < pivot) --j;
 		if (i >= j)
 			break ;
 		swap(arr, i++, j--);

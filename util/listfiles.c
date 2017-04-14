@@ -20,11 +20,11 @@ static	void		find_max(t_content *cont)
 
 	i = 0;
 	etalon = 16;
-	max = (int)ft_strlen(cont->arr[i].d_name);
+	max = (int)ft_strlen(cont->arr[i].item.d_name);
 	while (i < cont->size)
 	{
-		if ((int)ft_strlen(cont->arr[i].d_name) > max)
-			max = (int)ft_strlen(cont->arr[i].d_name);
+		if ((int)ft_strlen(cont->arr[i].item.d_name) > max)
+			max = (int)ft_strlen(cont->arr[i].item.d_name);
 		i++;
 	}
 	while (max > etalon)
@@ -68,7 +68,7 @@ void				listfiles(t_content *cont)
 		i = j;
 		while (i < cont->size || i < cont->size / cont->rows)
 		{
-			ft_printf("%*s", cont->max * -1, cont->arr[i].d_name);
+			ft_printf("%*s", cont->max * -1, cont->arr[i].item.d_name);
 			i += cont->rows;
 		}
 		j++;
