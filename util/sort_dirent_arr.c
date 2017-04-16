@@ -12,37 +12,34 @@
 
 #include "../ft_ls.h"
 
-static void			swap(t_items *arr, int left, int right)
-{
-	t_items	tmp;
+// static void				partition(int left, int right, t_content *cont)
+// {
+// 	int				partition_point;
+// 	t_items			*pivot;
 
-	tmp = arr[left];
-	arr[left] = arr[right];
-	arr[right] = tmp;
-}
+// 	if (right - left <= 0)
+// 		return ;
+// 	else
+// 	{
+// 		pivot = &cont->arr[right];
+// 		partition_point = t_items_qsort(left, right, pivot, cont->arr, &compare_mtime);
+// 		partition(left, partition_point - 1, cont);
+// 		partition(partition_point + 1, right, cont);
+// 	}
+// }
 
-static void			partition(t_content *cont, t_items *arr, int size)
-{
-	int				i;
-	int				j;
-	long long		pivot;
+// static int compare_time(const void *m1, const void *m2)
+// {
+//      t_items *item1 = (t_items*) m1;
+//      t_items *item2 = (t_items*) m2;
 
-	i = 0;
-	j = size - 1;
-	pivot = cont->arr[size / 2].mtime;
-	if (size < 2)
-		return ;
-	while (42)
-	{
-		while (cont->arr[i].mtime > pivot) ++i;
-		while (cont->arr[j].mtime < pivot) --j;
-		if (i >= j)
-			break ;
-		swap(arr, i++, j--);
-	}
-	partition(cont, arr, i);
-	partition(cont, arr + i, size - i);
-}
+//      if (item1->mtime > item2->mtime)
+//      	return -1;
+//      if (item1->mtime < item2->mtime)
+//      	return 1;
+
+//      return 0;
+// }
 
 void				sort_dirent_array(char *options, t_content *cont)
 {
@@ -53,5 +50,6 @@ void				sort_dirent_array(char *options, t_content *cont)
 	else if (has_option(options, 'c'))
 		sort_dirent_array_c(cont);
 	else
-		partition(cont, cont->arr, cont->size);
+		//qsort(cont->arr, cont->size, sizeof(t_items), compare_time);
+		partition(0, cont->size - 1, cont, &compare_mtime);
 }

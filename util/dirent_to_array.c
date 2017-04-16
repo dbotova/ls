@@ -62,9 +62,9 @@ void				dirent_to_array(char *location, t_content *cont,
 			exit(1);
 		if (d->d_name[0] != '.' || has_option(options, 'a'))
 		{
-			cont->arr[i++].item = *d;
+			cont->arr[i].item = *d;
 			cont->total += buf.st_blocks;
-			take_time(location, d->d_name, cont, i);
+			take_time(location, d->d_name, cont, i++);
 		}
 	}
 	closedir(dir);

@@ -68,5 +68,19 @@ void				take_args(int argc, char **argv, char **location,
 					char **options);
 void				dirent_to_array(char *location, t_content *cont,
 					char *options);
+void				swap(t_items *arr, int left, int right);
+
+int					compare_name(t_items *arr, int pointer, t_items *pivot);
+int					compare_name_rev(t_items *arr, int pointer, t_items *pivot);
+int					compare_ctime_rev(t_items *arr, int pointer, t_items *pivot);
+int					compare_mtime_rev(t_items *arr, int pointer, t_items *pivot);
+int					compare_atime_rev(t_items *arr, int pointer, t_items *pivot);
+int					compare_ctime(t_items *arr, int pointer, t_items *pivot);
+int					compare_atime(t_items *arr, int pointer, t_items *pivot);
+int					compare_mtime(t_items *arr, int pointer, t_items *pivot);
+void				partition(int left, int right, t_content *cont,
+					int(*compare)(t_items*, int, t_items*));
+int					t_items_qsort(int left, int right, t_items *pivot,
+					t_items *arr, int(*compare)(t_items*, int, t_items*));
 
 #endif

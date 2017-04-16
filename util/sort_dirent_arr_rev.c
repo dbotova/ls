@@ -12,37 +12,21 @@
 
 #include "../ft_ls.h"
 
-static void			swap(t_items *arr, int left, int right)
-{
-	struct dirent	tmp;
+// static void				partition(int left, int right, t_content *cont)
+// {
+// 	int				partition_point;
+// 	t_items			*pivot;
 
-	tmp = arr[left].item;
-	arr[left].item = arr[right].item;
-	arr[right].item = tmp;
-}
-
-static void			partition(t_content *cont, t_items *arr, int size)
-{
-	int				i;
-	int				j;
-	long long		pivot;
-
-	i = 0;
-	j = size - 1;
-	pivot = cont->arr[size / 2].mtime;
-	if (size < 2)
-		return ;
-	while (42)
-	{
-		while (cont->arr[i].mtime < pivot) i++;
-		while (cont->arr[j].mtime > pivot) j--;
-		if (i >= j)
-			break ;
-		swap(arr, i++, j--);
-	}
-	partition(cont, arr, i);
-	partition(cont, arr + i, size - i);
-}
+// 	if (right - left <= 0)
+// 		return ;
+// 	else
+// 	{
+// 		pivot = &cont->arr[right];
+// 		partition_point = t_items_qsort(left, right, pivot, cont->arr, &compare_mtime_rev);
+// 		partition(left, partition_point - 1, cont);
+// 		partition(partition_point + 1, right, cont);
+// 	}
+// }
 
 void				sort_dirent_array_rev(char *options, t_content *cont)
 {
@@ -51,5 +35,5 @@ void				sort_dirent_array_rev(char *options, t_content *cont)
 	if (has_option(options, 'c'))
 		sort_dirent_array_rev_c(cont);
 	else
-		partition(cont, cont->arr, cont->size);
+		partition(0, cont->size - 1, cont, &compare_mtime_rev);
 }

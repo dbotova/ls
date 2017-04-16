@@ -12,52 +12,19 @@
 
 #include "../ft_ls.h"
 
-static void			swap(t_content *cont, int left, int right)
-{
-	struct dirent	tmp;
-
-	tmp = cont->arr[left].item;
-	cont->arr[left].item = cont->arr[right].item;
-	cont->arr[right].item = tmp;
-}
-
-static int			partition(int left, int right, char *pivot,
-					t_content *cont)
-{
-	int				left_pointer;
-	int				right_pointer;
-
-	left_pointer = left - 1;
-	right_pointer = right;
-	while (42)
-	{
-		while (ft_strcmp(cont->arr[++left_pointer].item.d_name, pivot) > 0)
-			;
-		while (right_pointer > 0 &&
-			ft_strcmp(cont->arr[--right_pointer].item.d_name, pivot) < 0)
-			;
-		if (left_pointer >= right_pointer)
-			break ;
-		else
-			swap(cont, left_pointer, right_pointer);
-	}
-	swap(cont, left_pointer, right);
-	return (left_pointer);
-}
-
 void				sort_by_name_rev(int left, int right, t_content *cont)
 {
-	int				partition_point;
-	char			*pivot;
+	partition(0, cont->size - 1, cont, &compare_name_rev);
+	// int				partition_point;
+	// t_items			*pivot;
 
-	if (right - left <= 0)
-		return ;
-	else
-	{
-		pivot = ft_strdup(cont->arr[right].item.d_name);
-		partition_point = partition(left, right, pivot, cont);
-		sort_by_name_rev(left, partition_point - 1, cont);
-		sort_by_name_rev(partition_point + 1, right, cont);
-	}
-	SMART_FREE(pivot);
+	// if (right - left <= 0)
+	// 	return ;
+	// else
+	// {
+	// 	pivot = &cont->arr[right];
+	// 	partition_point = t_items_qsort(left, right, pivot, cont->arr, &compare_name_rev);
+	// 	sort_by_name_rev(left, partition_point - 1, cont);
+	// 	sort_by_name_rev(partition_point + 1, right, cont);
+	// }
 }

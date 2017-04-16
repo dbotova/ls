@@ -27,7 +27,9 @@ OBJS =	ft_ls.o 															\
 		./util/sort_dirent_arr_u.o 											\
 		./util/sort_dirent_arr_rev_u.o 										\
 		./util/take_args.o 													\
-		./util/free_cont.o  												
+		./util/free_cont.o 													\
+		./util/compare.o													\
+		./util/t_items_qsort.o											
 LIBS = ./libft.a
 
 HEADERS = ft_ls.h ./libft/libft.h

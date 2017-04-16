@@ -12,7 +12,7 @@
 
 #include "../ft_ls.h"
 
-static	void		print_time(struct stat buf, char *options)
+static	void		print_time(t_content *cont, int i, char *options)
 {
 	time_t			raw_time;
 	time_t			cur_time;
@@ -20,11 +20,11 @@ static	void		print_time(struct stat buf, char *options)
 	char			c_time[25];
 
 	if (has_option(options, 'u'))
-		raw_time = buf.st_atime;
+		raw_time = cont->arr[i].atime;
 	if (!has_option(options, 'c'))
-		raw_time = buf.st_mtime;
+		raw_time = cont->arr[i].mtime;
 	else
-		raw_time = buf.st_ctime;
+		raw_time = cont->arr[i].ctime;
 	cur_time = time(NULL);
 	ft_strcpy(r_time, ctime(&raw_time));
 	ft_strcpy(c_time, ctime(&cur_time));
@@ -98,7 +98,7 @@ void				print_long_format(char *location, char *options,
 		}
 		print_perms(buf);
 		print_lnk_user_group_size(buf, options);
-		print_time(buf, options);
+		print_time(cont, i, options);
 		if (S_ISLNK(buf.st_mode))
 			print_link(buf, i, cont);
 		else
