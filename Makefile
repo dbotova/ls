@@ -19,13 +19,8 @@ OBJS =	ft_ls.o 															\
 		./util/listfiles.o 													\
 		./util/long_format.o 												\
 		./util/sort_by_name.o 												\
-		./util/sort_by_name_rev.o 											\
 		./util/sort_dirent_arr.o 											\
 		./util/sort_dirent_arr_rev.o 										\
-		./util/sort_dirent_arr_c.o 											\
-		./util/sort_dirent_arr_rev_c.o 										\
-		./util/sort_dirent_arr_u.o 											\
-		./util/sort_dirent_arr_rev_u.o 										\
 		./util/take_args.o 													\
 		./util/free_cont.o 													\
 		./util/compare.o													\

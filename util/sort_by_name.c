@@ -12,9 +12,12 @@
 
 #include "../ft_ls.h"
 
-void				sort_by_name(int left, int right, t_content *cont)
+void				sort_by_name(char *options, t_content *cont)
 {
-	partition(0, cont->size - 1, cont, &compare_name);
+	if (has_option(options, 'r'))
+		partition(0, cont->size - 1, cont, &compare_name_rev);
+	else
+		partition(0, cont->size - 1, cont, &compare_name);
 	// int				partition_point;
 	// t_items			*pivot;
 

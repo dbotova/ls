@@ -12,28 +12,12 @@
 
 #include "../ft_ls.h"
 
-// static void				partition(int left, int right, t_content *cont)
-// {
-// 	int				partition_point;
-// 	t_items			*pivot;
-
-// 	if (right - left <= 0)
-// 		return ;
-// 	else
-// 	{
-// 		pivot = &cont->arr[right];
-// 		partition_point = t_items_qsort(left, right, pivot, cont->arr, &compare_mtime_rev);
-// 		partition(left, partition_point - 1, cont);
-// 		partition(partition_point + 1, right, cont);
-// 	}
-// }
-
 void				sort_dirent_array_rev(char *options, t_content *cont)
 {
 	if (has_option(options, 'u'))
-		sort_dirent_array_rev_u(cont);
+		partition(0, cont->size - 1, cont, &compare_atime_rev);
 	if (has_option(options, 'c'))
-		sort_dirent_array_rev_c(cont);
+		partition(0, cont->size - 1, cont, &compare_ctime_rev);
 	else
 		partition(0, cont->size - 1, cont, &compare_mtime_rev);
 }
