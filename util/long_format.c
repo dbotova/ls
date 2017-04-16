@@ -28,11 +28,11 @@ static	void		print_time(t_content *cont, int i, char *options)
 	cur_time = time(NULL);
 	ft_strcpy(r_time, ctime(&raw_time));
 	ft_strcpy(c_time, ctime(&cur_time));
-	ft_printf("%.3s %.2s ", r_time + 4, r_time + 8);
+	ft_printf(" %.3s %.2s ", r_time + 4, r_time + 8);
 	if (ft_strcmp(c_time + 20, r_time + 20) == 0)
 		ft_printf("%.5s ", r_time + 11);
 	else
-		ft_printf("%s", r_time + 20);
+		ft_printf("%s ", r_time + 20);
 }
 
 static	void		print_lnk_user_group_size(struct stat buf, char *options)
@@ -42,10 +42,10 @@ static	void		print_lnk_user_group_size(struct stat buf, char *options)
 
 	grp = getgrgid(buf.st_gid);
 	pwd = getpwuid(buf.st_uid);
-	ft_printf("%3d ", buf.st_nlink);
+	ft_printf("%d ", buf.st_nlink);
 	if (!has_option(options, 'g'))
 		ft_printf("%s ", pwd->pw_name);
-	ft_printf(" %s %7d ", grp->gr_name, buf.st_size);
+	ft_printf(" %s %7d", grp->gr_name, buf.st_size);
 }
 
 static	void		print_perms(struct stat buf)
