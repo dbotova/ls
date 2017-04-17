@@ -20,11 +20,11 @@ static	void		print_time(t_content *cont, int i, char *options)
 	char			c_time[25];
 
 	if (has_option(options, 'u'))
-		raw_time = cont->arr[i].atime;
+		raw_time = cont->arr[i].atime.tv_sec;
 	if (!has_option(options, 'c'))
-		raw_time = cont->arr[i].mtime;
+		raw_time = cont->arr[i].mtime.tv_sec;
 	else
-		raw_time = cont->arr[i].ctime;
+		raw_time = cont->arr[i].ctime.tv_sec;
 	cur_time = time(NULL);
 	ft_strcpy(r_time, ctime(&raw_time));
 	ft_strcpy(c_time, ctime(&cur_time));

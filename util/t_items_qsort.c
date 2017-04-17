@@ -15,33 +15,31 @@ void				partition(int left, int right, t_content *cont,
 					int(*compare)(t_items*, int, t_items*))
 {
 	int				partition_point;
-	t_items			*pivot;
 
 	if (right - left <= 0)
 		return ;
 	else
 	{
-		pivot = &cont->arr[right];
-		partition_point = t_items_qsort(left, right, pivot, cont->arr, compare);
+		partition_point = t_items_qsort(left, right, cont->arr, compare);
 		partition(left, partition_point - 1, cont, compare);
 		partition(partition_point + 1, right, cont, compare);
 	}
 }
 
-int					t_items_qsort(int left, int right, t_items *pivot,
+int					t_items_qsort(int left, int right,
 					t_items *arr, int(*compare)(t_items*, int, t_items*))
 {
 	int				left_pointer;
 	int				right_pointer;
+	t_items			*pivot;
 
 	left_pointer = left - 1;
 	right_pointer = right;
+	pivot = &arr[right];
 	while (42)
 	{
-		while (left_pointer <= right && compare(arr, ++left_pointer, pivot) < 0)
-			;
-		while (right_pointer > 0 && compare(arr, --right_pointer, pivot) > 0)
-			;
+		while (left_pointer <= right && compare(arr, ++left_pointer, pivot) < 0) ;
+		while (right_pointer > 0 && compare(arr, --right_pointer, pivot) > 0) ;
 		if (left_pointer >= right_pointer)
 			break ;
 		else

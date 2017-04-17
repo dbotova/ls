@@ -30,9 +30,9 @@
 typedef struct		s_items
 {
 	struct dirent 	item;
-	time_t			mtime;
-	time_t			ctime;
-	time_t			atime;
+	struct timespec			mtime;
+	struct timespec			ctime;
+	struct timespec			atime;
 
 }					t_items;
 
@@ -79,7 +79,7 @@ int					compare_atime(t_items *arr, int pointer, t_items *pivot);
 int					compare_mtime(t_items *arr, int pointer, t_items *pivot);
 void				partition(int left, int right, t_content *cont,
 					int(*compare)(t_items*, int, t_items*));
-int					t_items_qsort(int left, int right, t_items *pivot,
+int					t_items_qsort(int left, int right,
 					t_items *arr, int(*compare)(t_items*, int, t_items*));
 
 #endif

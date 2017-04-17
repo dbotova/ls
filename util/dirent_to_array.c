@@ -19,10 +19,10 @@ static	void		take_time(char *location, char *path, t_content *cont,
 	struct stat		statbuf;
 
 	full_path = get_path(location, path);
-	lstat(full_path, &statbuf);
-	cont->arr[i].mtime = statbuf.st_mtime;
-	cont->arr[i].atime = statbuf.st_atime;
-	cont->arr[i].ctime = statbuf.st_ctime;
+	stat(full_path, &statbuf);
+	cont->arr[i].mtime = statbuf.st_mtimespec;
+	cont->arr[i].atime = statbuf.st_atimespec;
+	cont->arr[i].ctime = statbuf.st_ctimespec;
 	SMART_FREE(full_path);
 
 }
